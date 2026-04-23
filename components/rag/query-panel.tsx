@@ -79,7 +79,7 @@ export const QueryPanel = () => {
         }
         topKLines={lines}
         height="540px"
-        caption="O octaedro escuro é a query. As linhas tracejadas terracota vão até os três chunks mais próximos."
+        caption="O octaedro preto representa o vetor da consulta. As linhas tracejadas ligam a consulta aos três chunks com maior similaridade cosseno."
       />
 
       <div className="grid grid-cols-1 gap-8 md:grid-cols-5">

@@ -5,18 +5,30 @@ const modules = [
   {
     href: "/rag",
     number: "01",
-    eyebrow: "Módulo um",
+    eyebrow: "Módulo 01",
     title: "Retrieval-Augmented Generation",
-    dek: "Chunking, embedding, indexação com metadados e o que realmente significa “dimensão semântica” — visto por dentro de um espaço vetorial 3D.",
-    bullets: ["Chunking e overlap", "Espaço de embedding", "Indexação e metadados", "Dados dinâmicos", "Playground de recuperação"],
+    dek: "Chunking, embeddings, indexação com metadados e similaridade cosseno explicadas por dentro de um espaço vetorial interativo.",
+    bullets: [
+      "Chunking e sobreposição",
+      "Espaço de embedding em 3D",
+      "Indexação e metadados",
+      "Atualização do índice",
+      "Consulta por similaridade",
+    ],
   },
   {
     href: "/mcp",
     number: "02",
-    eyebrow: "Módulo dois",
-    title: "MCP, Tools e APIs",
-    dek: "Como uma LLM descobre e invoca ferramentas em tempo de execução, e por que isso não é a mesma coisa que “chamar uma API”.",
-    bullets: ["Anatomia de uma API", "Anatomia do MCP", "Comparação lado a lado", "Fluxo de tool calling", "Quando usar cada um"],
+    eyebrow: "Módulo 02",
+    title: "Model Context Protocol",
+    dek: "Como um modelo de linguagem descobre e invoca ferramentas em tempo de execução, e quais são as diferenças em relação a uma API REST.",
+    bullets: [
+      "Anatomia de uma API REST",
+      "Anatomia do MCP",
+      "Comparação por dimensão",
+      "Fluxo de tool calling",
+      "Critérios de escolha",
+    ],
   },
 ] as const;
 
@@ -26,20 +38,23 @@ export default function Home() {
       <section className="grid grid-cols-12 gap-x-8 pt-20 pb-24 md:pt-28 md:pb-32">
         <div className="col-span-12 md:col-span-10">
           <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-ink-muted">
-            Ensaio visual · 2026
+            Material educacional
           </p>
-          <h1 className="mt-8 font-serif text-[clamp(3rem,9vw,8rem)] leading-[0.96] tracking-tight text-ink">
-            Duas ideias
+          <h1 className="mt-8 font-serif text-[clamp(2.75rem,8vw,6.5rem)] leading-[0.98] tracking-tight text-ink">
+            Retrieval-Augmented
             <br />
-            <em className="italic text-ink-muted">visuais</em> de IA,
+            Generation e
             <br />
-            desmontadas.
+            Model Context Protocol.
           </h1>
-          <p className="mt-10 max-w-xl text-lg leading-relaxed text-ink md:text-xl">
-            Este site faz uma coisa só: torna visível o que costuma ficar
-            escondido atrás de diagramas chapados. De um lado, o espaço de
-            embeddings de um RAG. Do outro, o que um servidor MCP troca com
-            um modelo e por que isso difere de uma API.
+          <p className="mt-10 max-w-2xl text-lg leading-relaxed text-ink md:text-xl">
+            O site cobre dois conceitos centrais em sistemas de IA
+            aplicada. O primeiro módulo descreve como um RAG recupera
+            trechos de texto relevantes a uma consulta: como os documentos
+            são fatiados, convertidos em vetores, indexados e comparados.
+            O segundo módulo descreve o MCP, protocolo usado para que
+            modelos de linguagem descubram e invoquem ferramentas externas
+            em tempo de execução, e compara o protocolo com uma API REST.
           </p>
         </div>
       </section>
@@ -93,15 +108,24 @@ export default function Home() {
       <section className="grid grid-cols-12 gap-x-8 border-t border-rule pt-16 pb-8 mt-24">
         <div className="col-span-12 md:col-span-4">
           <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-muted">
-            Nota do autor
+            Sobre o método
           </p>
         </div>
-        <div className="col-span-12 md:col-span-8">
-          <p className="max-w-xl font-serif text-[22px] leading-[1.5] text-ink">
-            Os vetores e trajetórias aqui são <em className="italic">curados</em>.
-            Não há chamada de API em lugar nenhum, nem embedding da OpenAI
-            escondido. A honestidade da didática, neste caso, ganha da
-            fidelidade estatística.
+        <div className="col-span-12 md:col-span-8 text-[15.5px] leading-relaxed text-ink">
+          <p>
+            O site funciona inteiramente no navegador. Não há servidor de
+            modelo, banco vetorial ou chamada de API externa. Todos os 24
+            chunks do corpus foram descritos em oito dimensões semânticas
+            nomeadas (temporal, geográfico, científico, cultural,
+            tecnológico, histórico, numérico, afetivo). Cada consulta do
+            playground tem um vetor curado nas mesmas oito dimensões.
+          </p>
+          <p className="mt-4">
+            Essa escolha difere de um sistema real, em que cada dimensão
+            do vetor é opaca e cada embedding tem 768, 1024, 1536 ou mais
+            dimensões. A vantagem pedagógica é que, aqui, dá para olhar a
+            barra lateral de uma consulta e dizer exatamente por que cada
+            chunk foi recuperado. A seção <Link href="/sobre" className="underline underline-offset-4">Sobre</Link> detalha o trade-off.
           </p>
         </div>
       </section>

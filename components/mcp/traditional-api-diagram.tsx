@@ -13,10 +13,10 @@ export const TraditionalApiDiagram = () => {
     <figure className="border border-rule bg-surface p-6 md:p-10">
       <figcaption className="mb-6 flex items-baseline justify-between">
         <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-muted">
-          API tradicional · fluxo
+          API REST · fluxo de requisição
         </span>
         <span className="font-mono text-[10.5px] text-ink-muted">
-          Contrato fixo, integração manual
+          Contrato pré-conhecido
         </span>
       </figcaption>
 
@@ -133,13 +133,13 @@ export const TraditionalApiDiagram = () => {
         <text
           x={360}
           y={225}
-          fontFamily="var(--font-serif)"
-          fontSize="12"
-          fontStyle="italic"
+          fontFamily="var(--font-mono)"
+          fontSize="11"
           fill="var(--color-ink-muted)"
           textAnchor="middle"
+          letterSpacing="0.04em"
         >
-          toda chamada depende de já saber qual endpoint usar
+          cliente conhece endpoint e schema antes do build
         </text>
       </svg>
     </figure>

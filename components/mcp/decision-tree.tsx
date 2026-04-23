@@ -25,37 +25,37 @@ type Node = {
 const tree: Node = {
   kind: "node",
   id: "root",
-  question: "O cliente principal da integração é um modelo de IA ou agente?",
+  question: "O cliente principal da integração é um modelo de linguagem ou um agente de IA?",
   yes: {
     kind: "node",
     id: "freq",
-    question: "O conjunto de ferramentas muda com frequência (novas tools, descoberta dinâmica)?",
+    question: "O conjunto de ferramentas pode mudar com frequência durante a operação do sistema?",
     yes: {
       kind: "leaf",
       id: "mcp-pure",
-      headline: "MCP, direto.",
+      headline: "Adotar MCP diretamente",
       body:
-        "Descoberta em runtime e adição não-breaking de ferramentas são o caso de uso canônico do MCP. Não há ganho em espelhar isso atrás de uma API REST.",
+        "Descoberta em runtime e adição compatível de ferramentas são os recursos centrais do MCP. Quando o catálogo evolui com frequência, o cliente pode acompanhar essas mudanças sem redeploy, o que não é possível em uma API REST sem reescrita do cliente.",
       accent: "var(--color-accent)",
     },
     no: {
       kind: "node",
       id: "api-exists",
-      question: "Você já tem uma API REST que faz o que o agente precisa?",
+      question: "Já existe uma API REST que expõe as funções que o agente precisa usar?",
       yes: {
         kind: "leaf",
         id: "mcp-wrap",
-        headline: "Servidor MCP como verniz.",
+        headline: "Servidor MCP sobre a API REST existente",
         body:
-          "Escreva um servidor MCP pequeno que traduz as chamadas do modelo para as chamadas REST já existentes. Você ganha descoberta em runtime sem jogar fora a API.",
+          "O servidor MCP fica como uma camada fina sobre a API. Cada chamada de tool é traduzida em uma ou mais chamadas REST internas. A lógica de negócio permanece na API, e o agente passa a consumi-la por um catálogo descoberto em runtime.",
         accent: "var(--color-success)",
       },
       no: {
         kind: "leaf",
         id: "mcp-new",
-        headline: "MCP de saída.",
+        headline: "Começar diretamente por MCP",
         body:
-          "Como não há legado e o cliente é um modelo, comece já com MCP. Se depois precisar expor a mesma funcionalidade para humanos ou scripts, some uma API REST por cima.",
+          "Sem legado REST e com cliente agentivo, o custo de manter apenas MCP é menor. Se mais tarde for necessário expor as mesmas funções para clientes humanos ou scripts determinísticos, uma camada REST pode ser adicionada sobre a mesma lógica de negócio.",
         accent: "var(--color-accent)",
       },
     },
@@ -63,21 +63,21 @@ const tree: Node = {
   no: {
     kind: "node",
     id: "both",
-    question: "Vai haver agentes consumindo também, não só humanos e apps?",
+    question: "Agentes de IA também vão consumir essa integração, junto com humanos ou aplicações convencionais?",
     yes: {
       kind: "leaf",
       id: "both-stack",
-      headline: "API REST + servidor MCP.",
+      headline: "Manter API REST e adicionar servidor MCP",
       body:
-        "Sirva humanos e apps controlados via REST; sirva agentes via um servidor MCP. Os dois podem compartilhar a mesma lógica interna — apenas as camadas de interface mudam.",
+        "Humanos e aplicações convencionais consomem a API REST. Agentes consomem o servidor MCP. Os dois pontos de entrada podem compartilhar a camada de lógica de negócio, variando apenas a forma de apresentação.",
       accent: "var(--color-success)",
     },
     no: {
       kind: "leaf",
       id: "api-rest",
-      headline: "API REST tradicional.",
+      headline: "Manter apenas API REST",
       body:
-        "Clientes humanos e apps escritos à mão se beneficiam de um contrato fixo e documentado. MCP não tem o que adicionar aqui.",
+        "Clientes humanos e aplicações convencionais se beneficiam do rigor de um contrato fixo e documentado. Quando não há previsão de clientes agentivos, MCP não adiciona capacidade relevante sobre o que REST já oferece.",
       accent: "var(--color-ink-muted)",
     },
   },

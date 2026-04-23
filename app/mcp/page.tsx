@@ -8,7 +8,7 @@ import { Callout } from "@/components/ui/callout";
 export const metadata: Metadata = {
   title: "Módulo MCP",
   description:
-    "Abertura do módulo sobre MCP (Model Context Protocol): como uma LLM descobre e invoca ferramentas, e por que isso difere de uma API.",
+    "Introdução ao módulo sobre Model Context Protocol: protocolo de descoberta de ferramentas, diferenças em relação a APIs REST e fluxo de tool calling.",
 };
 
 export default function Page() {
@@ -16,63 +16,61 @@ export default function Page() {
     <article>
       <SectionHeader
         eyebrow="Módulo 02 · Abertura"
-        title={
-          <>
-            Não é uma <em className="italic text-ink-muted">API</em> — e o
-            motivo importa.
-          </>
-        }
-        dek="MCP parece mais um jeito de o modelo chamar um endpoint, mas o que ele padroniza é a descoberta. É aí que a analogia com API trava."
+        title="Model Context Protocol"
+        dek="MCP é uma especificação aberta, mantida pela Anthropic, que padroniza como clientes (modelos de linguagem, IDEs, agentes) descobrem e invocam ferramentas oferecidas por servidores externos em tempo de execução."
       />
       <div className="mt-16">
         <Prose>
           <p>
-            Toda API tradicional parte de um pressuposto: alguém já leu a
-            documentação, escreveu o código cliente e sabe que o endpoint{" "}
-            <code>POST /orders</code> aceita um <code>customer_id</code>. O
-            contrato é fixo em tempo de build.
+            Numa integração tradicional via API REST, o cliente precisa
+            conhecer os endpoints antes do build: quais rotas existem,
+            quais parâmetros aceitam, qual o formato da resposta. Esse
+            contrato é descrito em OpenAPI ou equivalente e fica fixo até
+            o próximo deploy.
           </p>
           <p>
-            MCP inverte o ponto de partida. O modelo, em tempo de execução,
-            pergunta ao servidor <em>quais ferramentas existem</em>, recebe
-            de volta uma lista descrita em linguagem natural e decide sozinho
-            qual usar. Ninguém precisou hardcodar.
+            MCP remove a premissa de conhecimento prévio. O cliente se
+            conecta a um servidor MCP e faz uma chamada de listagem
+            (<code>tools/list</code>), que devolve o catálogo atual de
+            ferramentas. Cada ferramenta vem com nome, descrição em
+            linguagem natural e schema JSON dos argumentos. A partir
+            daí, o cliente decide qual ferramenta invocar com qual
+            argumento, usando uma chamada genérica (<code>tools/call</code>).
+            As mensagens seguem o padrão JSON-RPC 2.0 sobre transporte
+            stdio, SSE ou HTTP.
           </p>
-          <p>
-            As cinco seções a seguir descrevem essa diferença peça por peça,
-            com diagramas animados e uma tabela comparativa.
-          </p>
-          <h2>O que vem pela frente</h2>
+
+          <h2>Conteúdo do módulo</h2>
           <ol className="mt-6 flex flex-col divide-y divide-rule border-y border-rule">
             {[
               {
                 n: "01",
-                title: "Anatomia de uma API",
-                text: "O modelo mental que traz o vício: cliente, endpoint, contrato estático.",
+                title: "Anatomia de uma API REST",
+                text: "Cliente, endpoint, contrato fixo e fluxo de requisição.",
                 href: "/mcp/api-tradicional",
               },
               {
                 n: "02",
                 title: "Anatomia do MCP",
-                text: "Cliente, servidor, ferramentas, recursos e prompts — tudo descoberto em runtime.",
+                text: "Cliente, servidor, ferramentas, recursos, prompts e o protocolo de descoberta.",
                 href: "/mcp/anatomia",
               },
               {
                 n: "03",
                 title: "Comparação",
-                text: "Oito dimensões onde as duas abordagens divergem na prática.",
+                text: "Oito dimensões em que API REST e MCP divergem, com notas para cada uma.",
                 href: "/mcp/comparacao",
               },
               {
                 n: "04",
-                title: "Tool calling",
-                text: "O fluxo completo de uma invocação, passo a passo, vista do lado do modelo.",
+                title: "Fluxo de tool calling",
+                text: "Sequência completa de mensagens JSON-RPC entre cliente e servidor durante uma invocação.",
                 href: "/mcp/tool-calling",
               },
               {
                 n: "05",
-                title: "Quando usar",
-                text: "Uma árvore de decisão curta para escolher entre MCP, API tradicional ou uma mistura das duas.",
+                title: "Critérios de escolha",
+                text: "Árvore de decisão curta sobre quando adotar MCP, API REST ou combinar os dois.",
                 href: "/mcp/decisao",
               },
             ].map((item) => (
@@ -100,11 +98,20 @@ export default function Page() {
               </li>
             ))}
           </ol>
-          <Callout variant="note" title="Contexto">
-            MCP (Model Context Protocol) é a especificação aberta da
-            Anthropic para padronizar como modelos falam com servidores
-            externos. O foco aqui é <em>mental</em>: o que ele representa,
-            não a sintaxe.
+
+          <Callout variant="note" title="Sobre a especificação">
+            MCP está em versão estável desde novembro de 2024. A
+            especificação completa, incluindo schemas JSON e
+            implementações de referência, está em{" "}
+            <a
+              href="https://modelcontextprotocol.io"
+              target="_blank"
+              rel="noreferrer"
+              className="underline underline-offset-4"
+            >
+              modelcontextprotocol.io
+            </a>
+            .
           </Callout>
         </Prose>
       </div>

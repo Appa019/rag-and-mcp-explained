@@ -7,7 +7,7 @@ import { MetadataCards } from "@/components/rag/metadata-cards";
 export const metadata: Metadata = {
   title: "Indexação e metadados",
   description:
-    "Onde o vetor mora e que etiquetas ele carrega. Filtros pré-similaridade, metadados e o que entra no índice além do embedding.",
+    "Estrutura típica de uma entrada no índice vetorial, metadados associados e filtros pré e pós-similaridade.",
 };
 
 export default function Page() {
@@ -15,50 +15,66 @@ export default function Page() {
     <article>
       <SectionHeader
         eyebrow="03 · Indexação"
-        title={
-          <>
-            Um vetor, cercado de <em className="italic text-ink-muted">etiquetas</em>.
-          </>
-        }
-        dek="Um índice de RAG não guarda só vetores. Guarda também origem, autor, data, categoria, contagem de tokens — informação estruturada que permite filtrar antes de comparar."
+        title="Indexação e metadados"
+        dek="Cada chunk é armazenado junto com seu vetor e um conjunto de etiquetas estruturadas. Essas etiquetas permitem filtrar o espaço de busca antes de aplicar a similaridade."
       />
 
       <div className="mt-14 flex flex-col gap-14">
         <Prose>
           <p>
-            A razão é prática. Imagine um bot de suporte técnico que tem
-            acesso a toda a base de FAQ da empresa e, também, aos manuais
-            de cinco produtos diferentes. Não adianta comparar o
-            embedding da pergunta contra tudo — o mais razoável é filtrar
-            primeiro pelo produto correto, pela data de publicação do
-            manual, pelo idioma, e só depois rodar a similaridade.
+            Uma entrada típica no índice vetorial guarda:
           </p>
+          <ul className="my-4 list-disc space-y-1 pl-6">
+            <li>o texto original do chunk,</li>
+            <li>o vetor de embedding,</li>
+            <li>um identificador estável do documento de origem,</li>
+            <li>autor, data de criação e data de expiração,</li>
+            <li>uma ou mais etiquetas de categoria,</li>
+            <li>o idioma e, muitas vezes, um hash do texto para deduplicação.</li>
+          </ul>
           <p>
-            Metadados sobrem onde o vetor sozinho não alcança. Ordenação
-            por data, agrupamento por fonte, exclusão de documentos
-            depreciados — tudo isso é consulta estruturada tradicional,
-            <em> não vetorial</em>.
+            Com esses metadados, é possível aplicar filtros antes ou
+            depois do cálculo de similaridade. Filtro pré-similaridade
+            reduz o espaço de busca: apenas chunks que satisfazem as
+            condições (categoria X, data superior a Y) entram na
+            comparação. Filtro pós-similaridade pega os top-k resultados
+            e reaplica critérios, útil para reordenar por recência ou
+            para excluir fontes depreciadas.
+          </p>
+
+          <h2>Filtros aplicados ao corpus</h2>
+          <p>
+            A grade abaixo mostra todos os 24 chunks do corpus simulado.
+            Use os controles para alternar as categorias ativas e mudar a
+            ordenação. A operação é equivalente a uma consulta do tipo
+            &ldquo;me dê todos os chunks das categorias X e Y, ordenados
+            por data decrescente&rdquo;, antes de qualquer cálculo
+            vetorial.
           </p>
         </Prose>
 
         <MetadataCards />
 
         <Prose>
-          <h2>O que vai num registro de índice</h2>
+          <h2>Motores de índice</h2>
           <p>
-            Em produção, cada entrada tende a carregar: o texto original
-            do chunk, o vetor de embedding, o identificador estável do
-            documento de origem, o autor, a data de criação, a data de
-            expiração, uma ou mais etiquetas de categoria, o hash do
-            conteúdo (para deduplicação), e o idioma. Bancos vetoriais
-            modernos indexam tudo junto e permitem filtros híbridos.
+            Em produção, o índice costuma rodar num banco vetorial
+            especializado (Qdrant, Weaviate, Pinecone, Milvus) ou em uma
+            extensão de banco relacional (pgvector no PostgreSQL). Esses
+            motores oferecem busca aproximada do vizinho mais próximo
+            (ANN, Approximate Nearest Neighbor), que é mais rápida do que
+            a busca exata quando o corpus tem milhões de vetores.
           </p>
-          <Callout variant="aside" title="Sobre a lógica de filtragem">
-            O filtro <em>pré</em>-similaridade é o mais eficiente: reduz
-            o espaço de busca antes da comparação vetorial. O filtro{" "}
-            <em>pós</em>-similaridade gasta mais processamento, mas
-            permite regras mais complexas — por exemplo, ranquear de
-            novo os top-10 com base na data.
+          <p>
+            A maior parte dos motores aceita filtros de metadados
+            integrados à busca vetorial, para que não seja necessário
+            trazer todos os chunks candidatos e filtrar no cliente.
+          </p>
+          <Callout variant="aside" title="Pré versus pós-filtragem">
+            Pré-filtragem é mais eficiente, porque reduz o espaço antes
+            da comparação vetorial. Pós-filtragem permite regras mais
+            complexas, como reranqueamento por recência ou diversificação
+            de fontes nos top-k.
           </Callout>
         </Prose>
       </div>

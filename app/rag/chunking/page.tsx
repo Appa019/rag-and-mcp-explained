@@ -2,12 +2,13 @@ import type { Metadata } from "next";
 import { SectionHeader } from "@/components/ui/section-header";
 import { Prose } from "@/components/ui/prose";
 import { Callout } from "@/components/ui/callout";
+import { Formula } from "@/components/ui/formula";
 import { ChunkingVisualizer } from "@/components/rag/chunking-visualizer";
 
 export const metadata: Metadata = {
   title: "Chunking",
   description:
-    "Por que cortar o texto importa: tamanho, sobreposição e o que se perde e se ganha em cada combinação.",
+    "Fatiamento do texto em chunks de tamanho fixo com sobreposição, e o efeito de cada parâmetro.",
 };
 
 export default function Page() {
@@ -15,44 +16,90 @@ export default function Page() {
     <article>
       <SectionHeader
         eyebrow="01 · Chunking"
-        title={<>Antes de qualquer vetor, uma tesoura.</>}
-        dek="Nenhum embedding de um livro inteiro faz sentido. Para que a busca funcione, o texto precisa ser fatiado em pedaços pequenos o bastante para terem coerência — e sobrepostos o bastante para não perderem o contexto."
+        title="Chunking"
+        dek="Antes de gerar embeddings, o texto precisa ser dividido em pedaços menores. O tamanho desses pedaços e a sobreposição entre eles determinam a qualidade da recuperação."
       />
 
       <div className="mt-14 flex flex-col gap-16">
         <Prose>
           <p>
-            <em>Chunking</em> é o primeiro passo prático de qualquer RAG.
-            Você pega um documento, decide um tamanho de corte e vai
-            recortando em pedaços. Tamanho grande demais, e o vetor
-            resultante vira uma média sem foco. Tamanho pequeno demais, e
-            frases importantes ficam cortadas ao meio.
+            Um modelo de embedding opera sobre uma janela limitada de
+            tokens e produz um único vetor por entrada. Se a entrada for
+            um documento inteiro, o vetor resultante será uma média
+            semântica sem foco: informação específica de um parágrafo se
+            dissolve entre parágrafos adjacentes. Por isso o texto é
+            fatiado antes da indexação.
           </p>
           <p>
-            A sobreposição existe justamente para mitigar o segundo
-            problema: os chunks vizinhos se <em>emendam</em>. Se a
-            sobreposição for de 30 caracteres, todo pedaço traz consigo os
-            últimos 30 caracteres do chunk anterior.
+            Dois parâmetros controlam o fatiamento: o tamanho do chunk
+            (em caracteres ou tokens) e a sobreposição entre chunks
+            consecutivos. Se o tamanho é{" "}
+            <Formula tex="s" /> e a sobreposição é{" "}
+            <Formula tex="o" />, o passo entre o início de um chunk e o
+            próximo é <Formula tex="s - o" />, e a posição inicial do{" "}
+            <Formula tex="k" />
+            -ésimo chunk é:
+          </p>
+        </Prose>
+
+        <Formula
+          tex="\text{start}_k = k \cdot (s - o) \qquad k = 0, 1, 2, \dots"
+          display
+          label="posição inicial do k-ésimo chunk"
+        />
+
+        <Prose>
+          <p>
+            O número total de chunks gerados a partir de um texto de
+            comprimento <Formula tex="L" /> é aproximadamente:
+          </p>
+        </Prose>
+
+        <Formula
+          tex="N \approx \left\lceil \frac{L - o}{s - o} \right\rceil"
+          display
+          label="número aproximado de chunks"
+        />
+
+        <Prose>
+          <p>
+            Quando a sobreposição é zero, a expressão se reduz a{" "}
+            <Formula tex="N = \lceil L/s \rceil" />. Quando a sobreposição
+            cresce, o número total de chunks também cresce, porque mais
+            conteúdo é repetido entre chunks vizinhos.
+          </p>
+          <h2>Simulação</h2>
+          <p>
+            Use os controles abaixo para alterar o tamanho e a
+            sobreposição sobre um texto de exemplo. As barras coloridas
+            acima do texto mostram onde cada chunk começa e termina.
           </p>
         </Prose>
 
         <ChunkingVisualizer />
 
         <Prose>
-          <h2>O que mudar nos controles muda, na prática</h2>
+          <h2>O que muda ao alterar os parâmetros</h2>
           <p>
-            Aumente o tamanho: menos chunks, cada um mais contextual, e o
-            índice fica menor. Diminua: mais chunks, cada um mais preciso,
-            mas o índice cresce e a busca fica mais ruidosa. Aumente o
-            overlap: maior segurança de que uma consulta que caia na
-            emenda ainda encontre o pedaço certo, ao custo de mais tokens
-            redundantes no índice.
+            Aumentar o tamanho do chunk reduz o número total de chunks e
+            preserva mais contexto em cada um, ao custo de diluir
+            informação específica. Reduzir o tamanho aumenta a
+            especificidade do vetor, ao custo de gerar um índice maior e
+            mais ruidoso.
           </p>
-          <Callout variant="note" title="Na produção">
-            Tamanhos típicos giram entre 200 e 800 tokens com overlap de
-            10 a 20%. A decisão depende do domínio: código costuma querer
-            chunks curtos delimitados por função; jurisprudência costuma
-            querer parágrafos inteiros.
+          <p>
+            A sobreposição existe para lidar com o caso em que uma frase
+            importante cai exatamente na fronteira entre dois chunks. Com
+            sobreposição zero, essa frase fica dividida. Com sobreposição
+            igual a 10 ou 20% do tamanho, ela aparece inteira em pelo
+            menos um dos chunks.
+          </p>
+          <Callout variant="note" title="Valores usados em produção">
+            Em sistemas reais, tamanhos típicos vão de 200 a 800 tokens
+            com sobreposição de 10 a 20%. A escolha depende do domínio:
+            código costuma ser fatiado por limites de função, textos
+            jurídicos costumam usar parágrafos inteiros, e transcrições
+            costumam seguir marcadores temporais.
           </Callout>
         </Prose>
       </div>

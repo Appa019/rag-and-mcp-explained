@@ -73,7 +73,7 @@ export const ChunkingVisualizer = () => {
           max={280}
           step={10}
           onChange={setSize}
-          hint="Pedaços menores são mais precisos na busca, mas perdem contexto."
+          hint="Chunks menores têm busca mais específica e índice maior. Chunks maiores preservam contexto e reduzem o número total de entradas."
         />
         <Control
           label="Sobreposição (overlap)"
@@ -83,7 +83,7 @@ export const ChunkingVisualizer = () => {
           max={Math.floor(size * 0.5)}
           step={5}
           onChange={setOverlap}
-          hint="Cola os chunks vizinhos para que frases partidas ao meio continuem encontráveis."
+          hint="Faz com que frases cortadas entre dois chunks apareçam inteiras em pelo menos um deles."
         />
       </div>
 

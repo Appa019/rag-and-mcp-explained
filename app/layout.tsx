@@ -26,14 +26,15 @@ const instrumentSerif = Instrument_Serif({
 
 export const metadata: Metadata = {
   title: {
-    default: "RAG × MCP — duas ideias visuais de IA",
-    template: "%s — RAG × MCP",
+    default: "RAG × MCP · material educacional",
+    template: "%s · RAG × MCP",
   },
   description:
-    "Um ensaio visual sobre como funcionam RAG (embedding, chunking, indexação com metadados) e MCP/Tools em contraste com APIs tradicionais.",
+    "Conteúdo educacional sobre Retrieval-Augmented Generation (chunking, embeddings, indexação) e Model Context Protocol, com visualizações interativas e comparações entre MCP e APIs REST.",
   openGraph: {
     title: "RAG × MCP",
-    description: "Duas ideias visuais de IA, explicadas em detalhe.",
+    description:
+      "Conteúdo educacional sobre RAG e MCP, com visualizações interativas.",
     locale: "pt_BR",
     type: "website",
   },

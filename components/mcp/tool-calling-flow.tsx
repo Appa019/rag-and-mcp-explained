@@ -20,67 +20,101 @@ const steps: Step[] = [
     title: "Pergunta em linguagem natural",
     summary: "“Quantas faturas vencem hoje?”",
     detail:
-      "O usuário não sabe — e não precisa saber — se existe uma ferramenta chamada query_invoices. Ele descreve a intenção.",
+      "O usuário descreve a intenção. Não precisa conhecer nomes de ferramentas, nomes de campos ou formatos de data. Essa é a camada de entrada que o resto do protocolo vai servir.",
   },
   {
     actor: "client",
-    title: "O cliente decide que vai precisar de ajuda",
-    summary: "LLM reconhece que a resposta depende de dados atuais que ela não tem.",
+    title: "Cliente identifica a necessidade de ferramenta",
+    summary: "A resposta depende de dados que a LLM não tem.",
     detail:
-      "Em vez de responder direto e arriscar alucinar, a LLM identifica que precisa consultar algo externo. Aqui começa o protocolo.",
+      "A LLM analisa a pergunta e conclui que precisa de dados externos para respondê-la com precisão. A saída esperada desta etapa é a decisão de entrar no protocolo MCP em vez de responder diretamente a partir do conhecimento paramétrico do modelo.",
   },
   {
     actor: "client",
-    title: "Cliente MCP pede a lista de ferramentas",
-    summary: "list_tools()",
+    title: "Cliente consulta a lista de ferramentas",
+    summary: "tools/list",
     detail:
-      "Chamada padrão do MCP. O cliente não precisa saber quais ferramentas o servidor oferece — por isso pergunta. A resposta traz nome, descrição e JSON Schema de entrada de cada uma.",
-    payload: `{\n  "method": "tools/list",\n  "params": {}\n}`,
+      "Chamada padrão do MCP. O cliente pede ao servidor o catálogo atual de ferramentas. A resposta traz, para cada ferramenta, nome, descrição em linguagem natural e JSON Schema dos argumentos aceitos.",
+    payload: `{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "tools/list",
+  "params": {}
+}`,
   },
   {
     actor: "server",
     title: "Servidor responde com o catálogo",
     summary: "3 ferramentas devolvidas",
     detail:
-      "Para cada ferramenta, o servidor envia nome, descrição em linguagem natural (essencial para a LLM escolher) e o schema de argumentos.",
-    payload: `[\n  { "name": "query_invoices", "description": "Consulta faturas por filtros", ... },\n  { "name": "send_email", ... },\n  { "name": "summarize_docs", ... }\n]`,
+      "A resposta descreve cada ferramenta disponível no momento. A descrição em linguagem natural é importante: ela é o sinal principal que a LLM usa para decidir qual ferramenta invocar.",
+    payload: `{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "result": {
+    "tools": [
+      { "name": "query_invoices",  "description": "Consulta faturas por filtros de data e status.", ... },
+      { "name": "send_email",      "description": "Envia e-mail transacional.", ... },
+      { "name": "summarize_docs",  "description": "Resume documentos longos em bullets.", ... }
+    ]
+  }
+}`,
   },
   {
     actor: "client",
-    title: "LLM escolhe uma ferramenta",
-    summary: "query_invoices é a mais alinhada à intenção",
+    title: "Cliente escolhe a ferramenta apropriada",
+    summary: "query_invoices corresponde à intenção da pergunta.",
     detail:
-      "A escolha é feita pelo modelo, não por uma regra estática. A descrição em linguagem natural é o que torna isso possível — a LLM compara intenção com descrição.",
+      "A LLM compara o texto da pergunta com as descrições recebidas. A escolha é feita pelo próprio modelo, não por uma regra externa. A qualidade da descrição da ferramenta impacta diretamente a acurácia dessa escolha.",
   },
   {
     actor: "client",
     title: "Cliente invoca a ferramenta",
-    summary: "call_tool(\"query_invoices\", { due_date: \"2026-04-23\" })",
+    summary: "tools/call com os argumentos preenchidos",
     detail:
-      "A LLM também preenche os argumentos a partir do schema e da pergunta original. Hoje é 23 de abril de 2026, então due_date vira essa data.",
-    payload: `{\n  "method": "tools/call",\n  "params": {\n    "name": "query_invoices",\n    "arguments": { "due_date": "2026-04-23" }\n  }\n}`,
+      "A LLM preenche os argumentos com base no JSON Schema da ferramenta e no conteúdo da pergunta. Hoje é 23 de abril de 2026, e due_date assume essa data.",
+    payload: `{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "method": "tools/call",
+  "params": {
+    "name": "query_invoices",
+    "arguments": { "due_date": "2026-04-23" }
+  }
+}`,
   },
   {
     actor: "server",
-    title: "Servidor executa e retorna",
-    summary: "12 faturas encontradas, R$ 23.450,00",
+    title: "Servidor executa e retorna o resultado",
+    summary: "12 faturas, total R$ 23.450,00",
     detail:
-      "O servidor pode estar fazendo uma query SQL, chamando outra API, lendo um arquivo — isso é invisível ao cliente. O retorno é sempre um payload estruturado que a LLM consegue ler.",
-    payload: `{\n  "content": [{\n    "type": "text",\n    "text": "12 invoices due 2026-04-23, total R$ 23,450.00"\n  }]\n}`,
+      "A implementação interna da ferramenta pode ser uma query SQL, uma chamada a outro serviço, a leitura de um arquivo. O cliente recebe apenas o payload estruturado de retorno, sem visibilidade sobre a execução.",
+    payload: `{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "12 invoices due 2026-04-23, total R$ 23,450.00"
+      }
+    ]
+  }
+}`,
   },
   {
     actor: "client",
-    title: "LLM compõe a resposta final",
-    summary: "Traduz o payload em frase natural",
+    title: "Cliente compõe a resposta final",
+    summary: "Payload estruturado traduzido em frase natural.",
     detail:
-      "A LLM recebe o resultado estruturado e o transforma na frase que o usuário lerá. Pode também fazer uma segunda chamada a uma ferramenta diferente se a primeira não bastar.",
+      "A LLM formata o conteúdo de retorno em uma resposta coerente com a pergunta original. Pode encadear uma segunda chamada de ferramenta se o resultado da primeira não for suficiente.",
   },
   {
     actor: "user",
-    title: "Usuário lê a resposta",
+    title: "Usuário recebe a resposta",
     summary: "“Hoje vencem 12 faturas, totalizando R$ 23.450,00.”",
     detail:
-      "Todo o protocolo — discovery, schemas, JSON-RPC — ficou invisível. O usuário viu uma conversa; o sistema por baixo fez descoberta em runtime.",
+      "Do lado do usuário, houve apenas uma troca de mensagem. O protocolo MCP, os schemas e a sequência JSON-RPC ficam encapsulados na camada do cliente.",
   },
 ];
 

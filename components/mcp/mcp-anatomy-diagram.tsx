@@ -11,10 +11,10 @@ export const McpAnatomyDiagram = () => {
     <figure className="border border-rule bg-surface p-6 md:p-10">
       <figcaption className="mb-6 flex items-baseline justify-between">
         <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-muted">
-          MCP · fluxo
+          MCP · fluxo de listagem e invocação
         </span>
         <span className="font-mono text-[10.5px] text-ink-muted">
-          Descoberta em runtime, contrato negociado
+          Descoberta em runtime
         </span>
       </figcaption>
 
@@ -218,13 +218,13 @@ export const McpAnatomyDiagram = () => {
         <text
           x={380}
           y={306}
-          fontFamily="var(--font-serif)"
-          fontSize="12"
-          fontStyle="italic"
+          fontFamily="var(--font-mono)"
+          fontSize="11"
           fill="var(--color-ink-muted)"
           textAnchor="middle"
+          letterSpacing="0.04em"
         >
-          o cliente não precisou saber, de antemão, que &quot;search&quot; existia
+          nome, descrição e schema de cada tool chegam pela listagem
         </text>
       </svg>
     </figure>

@@ -4,9 +4,9 @@ import { Prose } from "@/components/ui/prose";
 import { ComparisonTable } from "@/components/mcp/comparison-table";
 
 export const metadata: Metadata = {
-  title: "Comparação",
+  title: "Comparação entre API REST e MCP",
   description:
-    "Oito dimensões onde MCP e uma API tradicional divergem na prática — com detalhes clicáveis.",
+    "Oito dimensões em que API REST e MCP divergem, com detalhamento clicável.",
 };
 
 export default function Page() {
@@ -14,21 +14,28 @@ export default function Page() {
     <article>
       <SectionHeader
         eyebrow="03 · Comparação"
-        title={<>Lado a lado, sem rodeios.</>}
-        dek="Algumas das dimensões abaixo são sutis; outras, radicais. Clique em qualquer linha para ver o detalhe por trás da comparação."
+        title="Comparação entre API REST e MCP"
+        dek="A tabela lista oito dimensões em que as duas abordagens divergem. Cada linha pode ser expandida para ler o detalhe."
       />
 
       <div className="mt-14 flex flex-col gap-10">
         <ComparisonTable />
 
         <Prose>
-          <h2>O ponto que a tabela não cabe</h2>
+          <h2>Coexistência</h2>
           <p>
-            MCP não é <em>sucessor</em> de API REST. É uma camada de
-            contexto especializada para clientes que não sabem, de
-            antemão, o que podem fazer — caso típico de um agente de IA. O
-            servidor MCP frequentemente é apenas um verniz em cima de APIs
-            REST que já existem.
+            MCP e API REST não se excluem. Muitos servidores MCP em uso
+            hoje são camadas finas sobre APIs REST existentes: o servidor
+            recebe a chamada MCP, traduz para uma ou mais chamadas REST
+            internas e devolve o resultado formatado. Esse padrão permite
+            expor sistemas já existentes para clientes agentivos sem
+            reescrever a lógica de negócio.
+          </p>
+          <p>
+            A maior parte das divergências listadas acima vem da
+            diferença de público-alvo: APIs REST são projetadas para
+            desenvolvedores que escrevem clientes, MCP é projetado para
+            modelos que escolhem ferramentas em tempo de execução.
           </p>
         </Prose>
       </div>

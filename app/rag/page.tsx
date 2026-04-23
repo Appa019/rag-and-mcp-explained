@@ -8,7 +8,7 @@ import { Callout } from "@/components/ui/callout";
 export const metadata: Metadata = {
   title: "Módulo RAG",
   description:
-    "Abertura do módulo sobre Retrieval-Augmented Generation: chunking, embedding, indexação, dados dinâmicos e recuperação por similaridade.",
+    "Introdução ao módulo sobre Retrieval-Augmented Generation: chunking, embeddings, indexação, atualização e consulta por similaridade.",
 };
 
 export default function Page() {
@@ -16,61 +16,59 @@ export default function Page() {
     <article>
       <SectionHeader
         eyebrow="Módulo 01 · Abertura"
-        title={
-          <>
-            <em className="italic text-ink-muted">Recuperar</em> antes de
-            responder.
-          </>
-        }
-        dek="Quando um modelo de linguagem não sabe algo, alguém precisa ir buscar. RAG é a parte que vai buscar — e a forma como ela guarda e encontra muda tudo no resultado."
+        title="Retrieval-Augmented Generation"
+        dek="RAG é a técnica que permite a um modelo de linguagem responder perguntas sobre documentos que não estavam no corpus de treino. O módulo cobre cada etapa do pipeline, da preparação do texto até a consulta final."
       />
       <div className="mt-16">
         <Prose>
           <p>
-            A frase popular diz que uma LLM “só sabe o que leu durante o
-            treino”. É uma meia-verdade útil: na prática, quase todo sistema
-            de IA aplicado precisa consultar documentos que o modelo nunca
-            viu — e-mails internos, jurisprudência, manuais, notas fiscais.
-            RAG é o nome que se deu a esse mecanismo de busca.
+            Um modelo de linguagem só sabe o que aprendeu durante o
+            treino. Qualquer sistema aplicado precisa responder perguntas
+            sobre conteúdo mais recente ou privado: manuais, notas
+            fiscais, e-mails internos, jurisprudência. RAG (Retrieval-Augmented Generation)
+            é o nome dado ao mecanismo que busca trechos relevantes
+            desses documentos e os anexa ao prompt enviado ao modelo.
           </p>
           <p>
-            O que costuma sumir nos tutoriais, porém, é{" "}
-            <em>como exatamente</em> o documento é recortado, transformado em
-            vetor e depois encontrado de novo quando uma pergunta chega. As
-            cinco seções a seguir mostram cada uma dessas peças sem esconder
-            as decisões.
+            O pipeline tem cinco etapas. A primeira fatia os documentos
+            em pedaços pequenos (chunks). A segunda converte cada chunk
+            em um vetor de números (embedding). A terceira guarda os
+            vetores num índice junto com metadados estruturados. A quarta
+            mantém esse índice atualizado conforme novos documentos
+            chegam. A quinta recebe a consulta do usuário, converte em
+            vetor também e busca os chunks mais próximos por similaridade.
           </p>
-          <h2>O que vem pela frente</h2>
+          <h2>Conteúdo do módulo</h2>
           <ol className="mt-6 flex flex-col divide-y divide-rule border-y border-rule">
             {[
               {
                 n: "01",
                 title: "Chunking",
-                text: "Por que cortar o texto importa, e o que o tamanho e a sobreposição mudam na qualidade da busca.",
+                text: "Fatiamento do texto em pedaços de tamanho controlado, com sobreposição.",
                 href: "/rag/chunking",
               },
               {
                 n: "02",
                 title: "Embeddings",
-                text: "O salto conceitual: cada pedaço de texto vira um ponto num espaço com muitas dimensões.",
+                text: "Conversão de cada chunk em vetor e o que são as dimensões desse vetor.",
                 href: "/rag/embeddings",
               },
               {
                 n: "03",
                 title: "Indexação e metadados",
-                text: "Onde o vetor mora, que etiquetas ele carrega e como filtrar antes de comparar.",
+                text: "Armazenamento dos vetores com etiquetas de fonte, data, autor e categoria.",
                 href: "/rag/indexing",
               },
               {
                 n: "04",
                 title: "Dados dinâmicos",
-                text: "Um índice não é estático: documentos entram, expiram e são reindexados o tempo todo.",
+                text: "Inserção, atualização e expiração de chunks ao longo do tempo.",
                 href: "/rag/dynamic",
               },
               {
                 n: "05",
                 title: "Playground",
-                text: "Uma pergunta. Um caminho pelo espaço vetorial. As três páginas que respondem por ele.",
+                text: "Consulta guiada: uma pergunta entra, a similaridade cosseno seleciona os três chunks mais próximos.",
                 href: "/rag/playground",
               },
             ].map((item) => (
@@ -98,14 +96,14 @@ export default function Page() {
               </li>
             ))}
           </ol>
-          <Callout variant="aside" title="Método">
-            Tudo aqui é simulado, com vetores em oito dimensões nomeadas
-            (temporal, científico, cultural, etc.). Isso não bate com
-            produção — o trade-off está descrito em{" "}
-            <Link href="/sobre" className="underline">
+          <Callout variant="aside" title="Nota sobre o modelo simulado">
+            Todos os vetores usados no módulo foram curados com oito
+            dimensões semânticas nomeadas. A página{" "}
+            <Link href="/sobre" className="underline underline-offset-4">
               Sobre
-            </Link>
-            .
+            </Link>{" "}
+            descreve em que isso difere de um sistema real com 1536 ou
+            mais dimensões.
           </Callout>
         </Prose>
       </div>
