@@ -38,7 +38,7 @@ Os vetores são curados à mão, com oito dimensões nomeadas (temporal, geográ
 
 ## Rodando localmente
 
-Requer Node.js e pnpm 10. No pnpm 11 ou mais novo, `pnpm install` termina com erro por causa da configuração de builds ignorados em `pnpm-workspace.yaml`.
+Requer Node.js e pnpm.
 
 ```bash
 pnpm install
