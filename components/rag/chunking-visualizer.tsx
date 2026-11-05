@@ -2,9 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-
-const sampleText =
-  "No fim do século XIX, a cidade de São Paulo passou por uma transformação rápida: a substituição das tropas de muares pelas estradas de ferro, a chegada de imigrantes europeus e o início da industrialização na zona da Luz. Em poucas décadas, uma vila colonial acomodada no interior paulista virou o maior centro de consumo do Brasil. A explosão demográfica acompanhou o café, que saía do Vale do Paraíba em composições ferroviárias até o porto de Santos, de onde embarcava para a Europa e para os Estados Unidos. A cidade que ainda caminhava em torno do Largo de São Francisco ganhou avenidas, bondes elétricos e um primeiro perfil verticalizado.";
+import { chunkingSample as sampleText, computeChunks } from "@/lib/chunking";
 
 const CHUNK_COLORS = [
   "var(--color-viz-1)",
@@ -15,36 +13,20 @@ const CHUNK_COLORS = [
   "var(--color-viz-6)",
 ];
 
-type Chunk = {
-  index: number;
-  start: number;
-  end: number;
-  text: string;
-  tokens: number;
-  color: string;
-};
+const colorOf = (index: number): string =>
+  CHUNK_COLORS[index % CHUNK_COLORS.length] ?? CHUNK_COLORS[0]!;
 
-const computeChunks = (text: string, size: number, overlap: number): Chunk[] => {
-  const step = Math.max(1, size - overlap);
-  const chunks: Chunk[] = [];
-  let i = 0;
-  let idx = 0;
-  while (i < text.length) {
-    const end = Math.min(i + size, text.length);
-    const piece = text.slice(i, end);
-    chunks.push({
-      index: idx,
-      start: i,
-      end,
-      text: piece,
-      tokens: Math.max(1, Math.round(piece.length / 4)),
-      color: CHUNK_COLORS[idx % CHUNK_COLORS.length] ?? CHUNK_COLORS[0]!,
-    });
-    if (end >= text.length) break;
-    i += step;
-    idx += 1;
-  }
-  return chunks;
+// Splits the text at every chunk boundary; each piece knows which chunks cover it.
+const toSegments = (chunks: ReturnType<typeof computeChunks>) => {
+  const cuts = [...new Set(chunks.flatMap((c) => [c.start, c.end]))].sort((x, y) => x - y);
+  return cuts.slice(0, -1).map((from, i) => {
+    const to = cuts[i + 1]!;
+    return {
+      from,
+      to,
+      owners: chunks.filter((c) => c.start <= from && c.end >= to).map((c) => c.index),
+    };
+  });
 };
 
 export const ChunkingVisualizer = () => {
@@ -56,6 +38,8 @@ export const ChunkingVisualizer = () => {
     () => computeChunks(sampleText, size, overlap),
     [size, overlap],
   );
+
+  const segments = useMemo(() => toSegments(chunks), [chunks]);
 
   const totalLen = sampleText.length;
   const totalTokens = chunks.reduce((s, c) => s + c.tokens, 0);
@@ -83,7 +67,7 @@ export const ChunkingVisualizer = () => {
           max={Math.floor(size * 0.5)}
           step={5}
           onChange={setOverlap}
-          hint="Faz com que frases cortadas entre dois chunks apareçam inteiras em pelo menos um deles."
+          hint="Faz com que frases cortadas entre dois chunks apareçam inteiras em pelo menos um deles. O corte respeita palavras inteiras, então a sobreposição real pode ser um pouco menor."
         />
       </div>
 
@@ -125,7 +109,7 @@ export const ChunkingVisualizer = () => {
                       left: `${left}%`,
                       width: `${width}%`,
                       top: `${top}px`,
-                      backgroundColor: chunk.color,
+                      backgroundColor: colorOf(chunk.index),
                       color: "white",
                       opacity: hoveredIndex === null || active ? 1 : 0.35,
                     }}
@@ -140,25 +124,30 @@ export const ChunkingVisualizer = () => {
 
         <div className="border-t border-rule px-5 py-6">
           <p className="mb-3 text-sm text-ink-muted">
-            Texto-fonte
+            Texto-fonte. Trechos com fundo cinza entram em dois chunks
+            (sobreposição); passe o ponteiro numa barra para ver o chunk.
           </p>
-          <p className="max-w-none text-[15px] leading-[1.8] text-ink">
-            {chunks.map((chunk) => {
-              const isHover = hoveredIndex === chunk.index;
+          <p className="max-w-none text-base leading-[1.8] text-ink">
+            {segments.map((seg) => {
+              const isHover = hoveredIndex !== null && seg.owners.includes(hoveredIndex);
+              const isOverlap = seg.owners.length > 1;
               return (
                 <span
-                  key={chunk.index}
-                  onMouseEnter={() => setHoveredIndex(chunk.index)}
+                  key={seg.from}
+                  onMouseEnter={() => setHoveredIndex(seg.owners[0] ?? null)}
                   onMouseLeave={() => setHoveredIndex(null)}
                   className="transition-colors"
                   style={{
-                    backgroundColor: isHover ? chunk.color : "transparent",
+                    backgroundColor: isHover
+                      ? colorOf(hoveredIndex)
+                      : isOverlap
+                        ? "var(--color-rule)"
+                        : "transparent",
                     color: isHover ? "white" : "inherit",
-                    padding: isHover ? "0 2px" : "0",
                     cursor: "default",
                   }}
                 >
-                  {chunk.text}
+                  {sampleText.slice(seg.from, seg.to)}
                 </span>
               );
             })}
