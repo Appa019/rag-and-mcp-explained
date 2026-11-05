@@ -43,6 +43,7 @@ type Props = {
   topKLines?: readonly { from: Vec3; to: Vec3; rank: number }[];
   height?: string;
   caption?: string;
+  zoom?: boolean;
 };
 
 export const VectorSpaceCanvas = ({
@@ -52,6 +53,7 @@ export const VectorSpaceCanvas = ({
   topKLines,
   height = "520px",
   caption,
+  zoom,
 }: Props) => {
   const reducedMotion = useSyncExternalStore(
     subscribeReducedMotion,
@@ -82,6 +84,7 @@ export const VectorSpaceCanvas = ({
           highlightIds={highlightIds}
           query={query}
           topKLines={topKLines}
+          zoom={zoom}
         />
       </div>
       {caption ? (

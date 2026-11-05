@@ -15,11 +15,13 @@ type Props = {
     label: string;
   };
   topKLines?: readonly { from: Vec3; to: Vec3; rank: number }[];
+  // Wheel zoom off where the canvas sits in the page flow and must not trap scrolling.
+  zoom?: boolean;
 };
 
 const axisColor = "#8a8a85";
 
-export const VectorSpaceScene = ({ chunks, highlightIds, query, topKLines }: Props) => {
+export const VectorSpaceScene = ({ chunks, highlightIds, query, topKLines, zoom = true }: Props) => {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const highlight = useMemo(() => new Set(highlightIds ?? []), [highlightIds]);
   const hasHighlight = highlight.size > 0;
@@ -62,6 +64,7 @@ export const VectorSpaceScene = ({ chunks, highlightIds, query, topKLines }: Pro
 
       <OrbitControls
         enablePan={false}
+        enableZoom={zoom}
         minDistance={4}
         maxDistance={22}
         makeDefault
