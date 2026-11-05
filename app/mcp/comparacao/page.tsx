@@ -13,7 +13,6 @@ export default function Page() {
   return (
     <article>
       <SectionHeader
-        eyebrow="03 · Comparação"
         title="Comparação entre API REST e MCP"
         dek="A tabela lista oito dimensões em que as duas abordagens divergem. Cada linha pode ser expandida para ler o detalhe."
       />

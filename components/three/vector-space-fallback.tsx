@@ -24,12 +24,12 @@ export const VectorSpaceFallback = ({ chunks, highlightIds, query }: Props) => {
   const hasHighlight = highlight.size > 0;
 
   return (
-    <figure className="w-full border border-rule bg-surface p-6">
+    <figure className="w-full bg-surface p-6">
       <figcaption className="mb-4 flex items-baseline justify-between">
-        <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-muted">
+        <span className="text-sm text-ink-muted">
           Projeção 2D (XY)
         </span>
-        <span className="font-mono text-[10.5px] text-warn">
+        <span className="text-sm text-ink-muted">
           3D desativado por preferência de movimento reduzido
         </span>
       </figcaption>
@@ -113,7 +113,7 @@ export const VectorSpaceFallback = ({ chunks, highlightIds, query }: Props) => {
         {Array.from(new Set(chunks.map((c) => c.category))).map((cat) => (
           <span
             key={cat}
-            className="inline-flex items-center gap-2 font-mono text-[10.5px] uppercase tracking-[0.18em] text-ink-muted"
+            className="inline-flex items-center gap-2 text-sm text-ink-muted"
           >
             <span
               className="inline-block size-2"

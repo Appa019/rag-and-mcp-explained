@@ -14,7 +14,6 @@ export default function Page() {
   return (
     <article>
       <SectionHeader
-        eyebrow="05 · Decisão"
         title="Critérios de escolha"
         dek="A árvore abaixo guia a decisão entre MCP, API REST ou combinação dos dois, a partir de três perguntas sobre o cliente da integração e o cenário de uso."
       />

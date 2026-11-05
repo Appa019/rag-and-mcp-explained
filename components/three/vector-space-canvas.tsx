@@ -28,7 +28,7 @@ const Scene = dynamic(
     ssr: false,
     loading: () => (
       <div className="flex h-full w-full items-center justify-center bg-surface">
-        <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-muted">
+        <span className="text-sm text-ink-muted">
           carregando cena 3D…
         </span>
       </div>
@@ -74,7 +74,7 @@ export const VectorSpaceCanvas = ({
   return (
     <figure className="flex flex-col gap-3">
       <div
-        className="w-full border border-rule bg-surface"
+        className="w-full bg-surface"
         style={{ height }}
         role="img"
         aria-label="Visualização 3D interativa do espaço de embeddings simulado"
@@ -88,7 +88,7 @@ export const VectorSpaceCanvas = ({
         />
       </div>
       {caption ? (
-        <figcaption className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-muted">
+        <figcaption className="text-sm text-ink-muted">
           {caption}
         </figcaption>
       ) : null}

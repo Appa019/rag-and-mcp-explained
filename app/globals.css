@@ -2,18 +2,21 @@
 @import "katex/dist/katex.min.css";
 
 @theme {
-  --color-bg: #fafaf7;
-  --color-surface: #ffffff;
-  --color-ink: #111111;
-  --color-ink-muted: #555555;
-  --color-ink-subtle: #8a8a85;
-  --color-rule: #e6e3db;
-  --color-rule-strong: #c9c6be;
-  --color-accent: #1f3a5f;
+  --color-bg: #ffffff;
+  /* One tone step below the page: panels, formulas, code. No borders around them. */
+  --color-surface: #f4f4f4;
+  --color-ink: #0a0a0a;
+  --color-ink-muted: #525252;
+  --color-ink-subtle: #6b6b6b;
+  --color-rule: #e5e5e5;
+  --color-rule-strong: #a3a3a3;
+  /* The one accent: links and the primary action only. */
+  --color-accent: #1b4fd8;
   --color-accent-ink: #ffffff;
+  /* Data colours below are for the visualizations, not decoration. */
   --color-highlight: #c2410c;
   --color-success: #2f6b3e;
-  --color-warn: #9a6b00;
+  --color-warn: #8a5f00;
   --color-viz-1: #1f3a5f;
   --color-viz-2: #c2410c;
   --color-viz-3: #2f6b3e;
@@ -21,21 +24,8 @@
   --color-viz-5: #0e7490;
   --color-viz-6: #b91c4f;
 
-  --font-sans: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
-  --font-serif: var(--font-instrument-serif), "Times New Roman", serif;
-  --font-mono: var(--font-geist-mono), "JetBrains Mono", ui-monospace, monospace;
-
-  --text-display: 4.5rem;
-  --text-display--line-height: 1.02;
-  --text-display--letter-spacing: -0.03em;
-
-  --text-h1: 3rem;
-  --text-h1--line-height: 1.08;
-  --text-h1--letter-spacing: -0.025em;
-
-  --text-h2: 2rem;
-  --text-h2--line-height: 1.15;
-  --text-h2--letter-spacing: -0.015em;
+  --font-sans: Archivo, system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
 }
 
 html {
@@ -43,14 +33,12 @@ html {
   background: var(--color-bg);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
 }
 
 body {
   background: var(--color-bg);
   color: var(--color-ink);
   font-family: var(--font-sans);
-  font-feature-settings: "ss01", "cv11";
 }
 
 ::selection {
@@ -63,9 +51,75 @@ a {
   text-decoration: none;
 }
 
-.font-serif {
-  font-family: var(--font-serif);
-  font-feature-settings: "liga", "dlig";
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+/* Display: same family and setting as pedropestana.dev. Page titles only. */
+.type-display {
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  line-height: 0.92;
+}
+
+/* Text link: accent, 1px underline that thickens on hover. */
+.link {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+.link:hover {
+  text-decoration-thickness: 2px;
+}
+
+/* Primary action: flat accent fill, square corners. */
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 48px;
+  padding: 0 1.5rem;
+  background: var(--color-accent);
+  color: var(--color-accent-ink);
+  font-weight: 600;
+  transition: background-color 150ms, transform 150ms;
+}
+.button:hover {
+  background: #153fae;
+}
+.button:active {
+  transform: translateY(1px);
+}
+
+/* Hero entrance: each headline line rises from behind its own baseline. */
+@keyframes line-up {
+  from { transform: translateY(105%); }
+  to { transform: none; }
+}
+@keyframes nudge {
+  from { transform: translateY(28px); }
+  to { transform: none; }
+}
+@keyframes rise {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: none; }
+}
+.mask-line { display: block; overflow: hidden; padding-bottom: 0.04em; }
+.mask-line > span { display: block; animation: line-up 0.9s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.mask-line:nth-child(2) > span { animation-delay: 110ms; }
+.enter-rise { animation: rise 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.35s both; }
+
+/* Section parts rise as they enter the viewport. CSS only and transform only:
+   content is never hidden, with or without support. */
+@supports (animation-timeline: view()) {
+  .reveal {
+    animation: nudge linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 60%;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -77,4 +131,5 @@ a {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+  .reveal { animation: none !important; }
 }

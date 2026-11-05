@@ -8,12 +8,12 @@ export const McpAnatomyDiagram = () => {
   const duration = prefersReduced ? 0 : 3.6;
 
   return (
-    <figure className="border border-rule bg-surface p-6 md:p-10">
+    <figure className="bg-surface p-6 md:p-10">
       <figcaption className="mb-6 flex items-baseline justify-between">
-        <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-muted">
+        <span className="text-sm text-ink-muted">
           MCP · fluxo de listagem e invocação
         </span>
-        <span className="font-mono text-[10.5px] text-ink-muted">
+        <span className="text-sm text-ink-muted">
           Descoberta em runtime
         </span>
       </figcaption>
@@ -37,7 +37,7 @@ export const McpAnatomyDiagram = () => {
           <text
             x={115}
             y={150}
-            fontFamily="var(--font-serif)"
+            fontFamily="var(--font-semibold)"
             fontSize="18"
             fill="var(--color-ink)"
             textAnchor="middle"
@@ -47,18 +47,17 @@ export const McpAnatomyDiagram = () => {
           <text
             x={115}
             y={172}
-            fontFamily="var(--font-mono)"
+            fontFamily="var(--font-sans)"
             fontSize="10"
             fill="var(--color-ink-muted)"
             textAnchor="middle"
-            letterSpacing="0.08em"
           >
             ex: uma LLM
           </text>
           <text
             x={115}
             y={188}
-            fontFamily="var(--font-mono)"
+            fontFamily="var(--font-sans)"
             fontSize="10"
             fill="var(--color-ink-subtle)"
             textAnchor="middle"
@@ -80,7 +79,7 @@ export const McpAnatomyDiagram = () => {
           <text
             x={580}
             y={68}
-            fontFamily="var(--font-serif)"
+            fontFamily="var(--font-semibold)"
             fontSize="18"
             fill="var(--color-ink)"
             textAnchor="middle"
@@ -90,11 +89,10 @@ export const McpAnatomyDiagram = () => {
           <text
             x={580}
             y={88}
-            fontFamily="var(--font-mono)"
+            fontFamily="var(--font-sans)"
             fontSize="10"
             fill="var(--color-ink-muted)"
             textAnchor="middle"
-            letterSpacing="0.08em"
           >
             processo, container, binário
           </text>
@@ -117,11 +115,10 @@ export const McpAnatomyDiagram = () => {
         <text
           x={315}
           y={140}
-          fontFamily="var(--font-mono)"
+          fontFamily="var(--font-sans)"
           fontSize="10"
           fill="var(--color-ink-muted)"
           textAnchor="middle"
-          letterSpacing="0.08em"
         >
           stdio · SSE · HTTP
         </text>
@@ -141,7 +138,7 @@ export const McpAnatomyDiagram = () => {
             y={113}
             width={90}
             height={20}
-            fill="var(--color-accent)"
+            fill="var(--color-viz-1)"
           />
           <text
             x={250}
@@ -218,11 +215,10 @@ export const McpAnatomyDiagram = () => {
         <text
           x={380}
           y={306}
-          fontFamily="var(--font-mono)"
+          fontFamily="var(--font-sans)"
           fontSize="11"
           fill="var(--color-ink-muted)"
           textAnchor="middle"
-          letterSpacing="0.04em"
         >
           nome, descrição e schema de cada tool chegam pela listagem
         </text>
@@ -264,7 +260,7 @@ const InnerPanel = ({ x, y, icon, label, sub }: InnerPanelProps) => {
       <text
         x={x + 40}
         y={y + 22}
-        fontFamily="var(--font-serif)"
+        fontFamily="var(--font-semibold)"
         fontSize="14"
         fill="var(--color-ink)"
       >
@@ -273,10 +269,9 @@ const InnerPanel = ({ x, y, icon, label, sub }: InnerPanelProps) => {
       <text
         x={x + 40}
         y={y + 36}
-        fontFamily="var(--font-mono)"
+        fontFamily="var(--font-sans)"
         fontSize="9.5"
         fill="var(--color-ink-muted)"
-        letterSpacing="0.06em"
       >
         {sub}
       </text>

@@ -87,8 +87,8 @@ export const ChunkingVisualizer = () => {
         />
       </div>
 
-      <div className="rounded-none border border-rule bg-surface">
-        <div className="flex items-center justify-between border-b border-rule px-5 py-3 font-mono text-[11px] uppercase tracking-[0.18em] text-ink-muted">
+      <div className="rounded-none bg-surface">
+        <div className="flex items-center justify-between border-b border-rule px-5 py-3 text-sm text-ink-muted">
           <span>
             {chunks.length} chunk{chunks.length === 1 ? "" : "s"}
           </span>
@@ -120,7 +120,7 @@ export const ChunkingVisualizer = () => {
                     onMouseLeave={() => setHoveredIndex(null)}
                     onFocus={() => setHoveredIndex(chunk.index)}
                     onBlur={() => setHoveredIndex(null)}
-                    className="absolute flex h-5 items-center justify-start overflow-hidden px-2 font-mono text-[10px] tracking-wide outline-none transition-opacity focus-visible:ring-2 focus-visible:ring-ink"
+                    className="absolute flex h-5 items-center justify-start overflow-hidden px-2 text-[11px] font-medium tabular-nums outline-none transition-opacity focus-visible:ring-2 focus-visible:ring-ink"
                     style={{
                       left: `${left}%`,
                       width: `${width}%`,
@@ -130,7 +130,7 @@ export const ChunkingVisualizer = () => {
                       opacity: hoveredIndex === null || active ? 1 : 0.35,
                     }}
                   >
-                    <span>{String(chunk.index + 1).padStart(2, "0")}</span>
+                    <span>{chunk.index + 1}</span>
                   </motion.button>
                 );
               })}
@@ -139,7 +139,7 @@ export const ChunkingVisualizer = () => {
         </div>
 
         <div className="border-t border-rule px-5 py-6">
-          <p className="mb-3 font-mono text-[11px] uppercase tracking-[0.18em] text-ink-muted">
+          <p className="mb-3 text-sm text-ink-muted">
             Texto-fonte
           </p>
           <p className="max-w-none text-[15px] leading-[1.8] text-ink">
@@ -185,10 +185,10 @@ const Control = ({ label, unit, value, min, max, step, onChange, hint }: Control
   return (
     <label className="flex flex-col gap-2">
       <span className="flex items-baseline justify-between">
-        <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-muted">
+        <span className="text-sm text-ink-muted">
           {label}
         </span>
-        <span className="font-mono text-base tabular-nums text-ink">
+        <span className="text-base tabular-nums text-ink">
           {clamped}
           <span className="ml-1 text-xs text-ink-muted">{unit}</span>
         </span>

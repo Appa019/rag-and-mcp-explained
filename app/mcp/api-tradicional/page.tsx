@@ -15,7 +15,6 @@ export default function Page() {
   return (
     <article>
       <SectionHeader
-        eyebrow="01 · API REST"
         title="Anatomia de uma API REST"
         dek="Uma API REST expõe endpoints HTTP cujos contratos são conhecidos antes do build. O cliente sabe o endereço, os verbos, os parâmetros e o formato da resposta."
       />

@@ -17,13 +17,13 @@ export const Formula = ({ tex, display = false, label }: Props) => {
 
   if (display) {
     return (
-      <figure className="my-6 flex flex-col items-center gap-3 border border-rule bg-surface px-6 py-6">
+      <figure className="my-8 flex flex-col items-center gap-3 bg-surface px-6 py-8">
         <div
           className="overflow-x-auto text-ink"
           dangerouslySetInnerHTML={{ __html: html }}
         />
         {label ? (
-          <figcaption className="font-mono text-[11px] uppercase tracking-[0.16em] text-ink-muted">
+          <figcaption className="text-sm text-ink-muted">
             {label}
           </figcaption>
         ) : null}

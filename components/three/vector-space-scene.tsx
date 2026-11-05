@@ -117,10 +117,10 @@ const ChunkPoint = ({ chunk, isHovered, isHighlighted, dimmed, onHover }: ChunkP
           style={{ pointerEvents: "none" }}
         >
           <div
-            className="w-[260px] border border-rule bg-surface px-3 py-2 text-[12.5px] leading-snug text-ink shadow-sm"
+            className="w-[260px] bg-surface px-3 py-2 text-[12.5px] leading-snug text-ink shadow-sm"
             style={{ borderLeftWidth: 2, borderLeftColor: color }}
           >
-            <div className="mb-1 flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em]">
+            <div className="mb-1 flex items-center gap-2 text-sm">
               <span style={{ color }}>{getCategoryLabel(chunk.category)}</span>
               <span className="text-ink-muted">· {chunk.id}</span>
             </div>
@@ -144,7 +144,7 @@ const QueryMarker = ({ coords, label }: { coords: Vec3; label: string }) => {
         <meshBasicMaterial color="#c2410c" transparent opacity={0.15} depthWrite={false} />
       </mesh>
       <Html distanceFactor={10} position={[0, 0.45, 0]} style={{ pointerEvents: "none" }}>
-        <div className="whitespace-nowrap border border-ink bg-ink px-2 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-surface">
+        <div className="whitespace-nowrap border border-ink bg-ink px-2 py-1 text-sm text-bg">
           {label}
         </div>
       </Html>

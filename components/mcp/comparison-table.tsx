@@ -9,8 +9,8 @@ export const ComparisonTable = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <div className="border border-rule bg-surface">
-      <header className="hidden grid-cols-[1fr_1fr_1fr_auto] items-center gap-4 border-b border-rule px-5 py-3 font-mono text-[10.5px] uppercase tracking-[0.18em] text-ink-muted md:grid">
+    <div className="bg-surface">
+      <header className="hidden grid-cols-[1fr_1fr_1fr_auto] items-center gap-4 border-b border-rule px-5 py-3 text-sm text-ink-muted md:grid">
         <span>Dimensão</span>
         <span>API tradicional</span>
         <span>MCP</span>
@@ -27,7 +27,7 @@ export const ComparisonTable = () => {
                 className="grid w-full grid-cols-[1fr_auto] items-start gap-x-4 gap-y-2 px-5 py-4 text-left transition-colors hover:bg-bg md:grid-cols-[1fr_1fr_1fr_auto]"
                 aria-expanded={isOpen}
               >
-                <span className="col-span-1 font-serif text-[15px] leading-snug text-ink md:col-span-1">
+                <span className="col-span-1 font-semibold text-[15px] leading-snug text-ink md:col-span-1">
                   {row.dimension}
                 </span>
                 <ChevronDown
@@ -37,7 +37,7 @@ export const ComparisonTable = () => {
                   }`}
                 />
                 <span className="col-span-2 flex flex-col gap-1 md:col-span-1 md:block">
-                  <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-subtle md:hidden">
+                  <span className="text-sm text-ink-subtle md:hidden">
                     API
                   </span>
                   <span className="text-[14px] leading-snug text-ink-muted">
@@ -45,7 +45,7 @@ export const ComparisonTable = () => {
                   </span>
                 </span>
                 <span className="col-span-2 flex flex-col gap-1 md:col-span-1 md:block">
-                  <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-subtle md:hidden">
+                  <span className="text-sm text-ink-subtle md:hidden">
                     MCP
                   </span>
                   <span className="text-[14px] leading-snug text-ink">
@@ -64,7 +64,7 @@ export const ComparisonTable = () => {
                     className="overflow-hidden"
                   >
                     <div className="border-t border-rule bg-bg px-5 py-5">
-                      <p className="max-w-[60ch] font-serif text-[15.5px] leading-[1.7] text-ink">
+                      <p className="max-w-[60ch] font-semibold text-[15.5px] leading-[1.7] text-ink">
                         {row.detail}
                       </p>
                     </div>

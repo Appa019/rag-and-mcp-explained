@@ -15,7 +15,6 @@ export default function Page() {
   return (
     <article>
       <SectionHeader
-        eyebrow="Módulo 02 · Abertura"
         title="Model Context Protocol"
         dek="MCP é uma especificação aberta, mantida pela Anthropic, que padroniza como clientes (modelos de linguagem, IDEs, agentes) descobrem e invocam ferramentas oferecidas por servidores externos em tempo de execução."
       />
@@ -41,34 +40,29 @@ export default function Page() {
           </p>
 
           <h2>Conteúdo do módulo</h2>
-          <ol className="mt-6 flex flex-col divide-y divide-rule border-y border-rule">
+          <ol className="mt-6 flex flex-col">
             {[
               {
-                n: "01",
                 title: "Anatomia de uma API REST",
                 text: "Cliente, endpoint, contrato fixo e fluxo de requisição.",
                 href: "/mcp/api-tradicional",
               },
               {
-                n: "02",
                 title: "Anatomia do MCP",
                 text: "Cliente, servidor, ferramentas, recursos, prompts e o protocolo de descoberta.",
                 href: "/mcp/anatomia",
               },
               {
-                n: "03",
                 title: "Comparação",
                 text: "Oito dimensões em que API REST e MCP divergem, com notas para cada uma.",
                 href: "/mcp/comparacao",
               },
               {
-                n: "04",
                 title: "Fluxo de tool calling",
                 text: "Sequência completa de mensagens JSON-RPC entre cliente e servidor durante uma invocação.",
                 href: "/mcp/tool-calling",
               },
               {
-                n: "05",
                 title: "Critérios de escolha",
                 text: "Árvore de decisão curta sobre quando adotar MCP, API REST ou combinar os dois.",
                 href: "/mcp/decisao",
@@ -77,13 +71,10 @@ export default function Page() {
               <li key={item.href} className="py-5">
                 <Link
                   href={item.href}
-                  className="group grid grid-cols-[auto_1fr_auto] items-start gap-6"
+                  className="group grid grid-cols-[1fr_auto] items-start gap-6"
                 >
-                  <span className="font-mono text-[11px] text-ink-subtle">
-                    {item.n}
-                  </span>
                   <span className="flex flex-col">
-                    <span className="font-serif text-2xl leading-tight text-ink">
+                    <span className="font-semibold text-2xl leading-tight text-ink">
                       {item.title}
                     </span>
                     <span className="mt-1 text-[15px] leading-snug text-ink-muted">

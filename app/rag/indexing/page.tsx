@@ -14,7 +14,6 @@ export default function Page() {
   return (
     <article>
       <SectionHeader
-        eyebrow="03 · Indexação"
         title="Indexação e metadados"
         dek="Cada chunk é armazenado junto com seu vetor e um conjunto de etiquetas estruturadas. Essas etiquetas permitem filtrar o espaço de busca antes de aplicar a similaridade."
       />

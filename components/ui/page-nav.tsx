@@ -16,57 +16,44 @@ export const PageNav = ({ prev, next }: Props) => {
   return (
     <nav
       aria-label="Navegação entre seções"
-      className="mt-20 grid grid-cols-1 gap-4 border-t border-rule pt-8 md:grid-cols-2"
+      className="mt-28 grid grid-cols-1 gap-6 md:grid-cols-2"
     >
-      <div className="md:col-span-1">
+      <div>
         {prev ? (
-          <Link
-            href={prev.href}
-            className="group flex items-start gap-3 border border-transparent bg-transparent px-1 py-3 transition-colors hover:border-rule"
-          >
+          <Link href={prev.href} className="group flex items-start gap-3 py-3">
             <ArrowLeft
               aria-hidden
-              className="mt-1 size-4 text-ink-muted transition-transform group-hover:-translate-x-1 group-hover:text-ink"
+              className="mt-7 size-5 shrink-0 text-ink transition-transform group-hover:-translate-x-1 group-hover:text-accent"
             />
             <span className="flex flex-col">
-              <span className="font-mono text-[10.5px] uppercase tracking-[0.18em] text-ink-muted">
-                Anterior
-              </span>
-              <span className="font-serif text-[17px] leading-tight text-ink">
+              <span className="text-sm text-ink-muted">Anterior</span>
+              <span className="mt-1 text-2xl font-bold leading-tight text-ink transition-colors group-hover:text-accent">
                 {prev.label}
               </span>
               {prev.hint ? (
-                <span className="mt-0.5 text-[13px] leading-snug text-ink-muted">
-                  {prev.hint}
-                </span>
+                <span className="mt-1 text-[15px] leading-snug text-ink-muted">{prev.hint}</span>
               ) : null}
             </span>
           </Link>
-        ) : (
-          <span aria-hidden className="hidden md:block" />
-        )}
+        ) : null}
       </div>
-      <div className="md:col-span-1 md:justify-self-end md:text-right">
+      <div className="md:justify-self-end md:text-right">
         {next ? (
           <Link
             href={next.href}
-            className="group flex items-start gap-3 border border-transparent bg-transparent px-1 py-3 transition-colors hover:border-rule md:flex-row-reverse"
+            className="group flex items-start gap-3 py-3 md:flex-row-reverse"
           >
             <ArrowRight
               aria-hidden
-              className="mt-1 size-4 text-ink-muted transition-transform group-hover:translate-x-1 group-hover:text-ink"
+              className="mt-7 size-5 shrink-0 text-ink transition-transform group-hover:translate-x-1 group-hover:text-accent"
             />
             <span className="flex flex-col md:items-end">
-              <span className="font-mono text-[10.5px] uppercase tracking-[0.18em] text-ink-muted">
-                Próximo
-              </span>
-              <span className="font-serif text-[17px] leading-tight text-ink">
+              <span className="text-sm text-ink-muted">Próximo</span>
+              <span className="mt-1 text-2xl font-bold leading-tight text-ink transition-colors group-hover:text-accent">
                 {next.label}
               </span>
               {next.hint ? (
-                <span className="mt-0.5 text-[13px] leading-snug text-ink-muted">
-                  {next.hint}
-                </span>
+                <span className="mt-1 text-[15px] leading-snug text-ink-muted">{next.hint}</span>
               ) : null}
             </span>
           </Link>

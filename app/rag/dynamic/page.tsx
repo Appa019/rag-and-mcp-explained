@@ -14,7 +14,6 @@ export default function Page() {
   return (
     <article>
       <SectionHeader
-        eyebrow="04 · Dados dinâmicos"
         title="Dados dinâmicos"
         dek="Um índice em produção raramente fica estático. Documentos novos chegam, documentos existentes são editados e documentos antigos expiram."
       />

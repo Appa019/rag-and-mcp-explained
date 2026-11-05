@@ -15,7 +15,6 @@ export default function Page() {
   return (
     <article>
       <SectionHeader
-        eyebrow="Módulo 01 · Abertura"
         title="Retrieval-Augmented Generation"
         dek="RAG é a técnica que permite a um modelo de linguagem responder perguntas sobre documentos que não estavam no corpus de treino. O módulo cobre cada etapa do pipeline, da preparação do texto até a consulta final."
       />
@@ -39,34 +38,29 @@ export default function Page() {
             vetor também e busca os chunks mais próximos por similaridade.
           </p>
           <h2>Conteúdo do módulo</h2>
-          <ol className="mt-6 flex flex-col divide-y divide-rule border-y border-rule">
+          <ol className="mt-6 flex flex-col">
             {[
               {
-                n: "01",
                 title: "Chunking",
                 text: "Fatiamento do texto em pedaços de tamanho controlado, com sobreposição.",
                 href: "/rag/chunking",
               },
               {
-                n: "02",
                 title: "Embeddings",
                 text: "Conversão de cada chunk em vetor e o que são as dimensões desse vetor.",
                 href: "/rag/embeddings",
               },
               {
-                n: "03",
                 title: "Indexação e metadados",
                 text: "Armazenamento dos vetores com etiquetas de fonte, data, autor e categoria.",
                 href: "/rag/indexing",
               },
               {
-                n: "04",
                 title: "Dados dinâmicos",
                 text: "Inserção, atualização e expiração de chunks ao longo do tempo.",
                 href: "/rag/dynamic",
               },
               {
-                n: "05",
                 title: "Playground",
                 text: "Consulta guiada: uma pergunta entra, a similaridade cosseno seleciona os três chunks mais próximos.",
                 href: "/rag/playground",
@@ -75,13 +69,10 @@ export default function Page() {
               <li key={item.href} className="py-5">
                 <Link
                   href={item.href}
-                  className="group grid grid-cols-[auto_1fr_auto] items-start gap-6"
+                  className="group grid grid-cols-[1fr_auto] items-start gap-6"
                 >
-                  <span className="font-mono text-[11px] text-ink-subtle">
-                    {item.n}
-                  </span>
                   <span className="flex flex-col">
-                    <span className="font-serif text-2xl leading-tight text-ink">
+                    <span className="font-semibold text-2xl leading-tight text-ink">
                       {item.title}
                     </span>
                     <span className="mt-1 text-[15px] leading-snug text-ink-muted">
