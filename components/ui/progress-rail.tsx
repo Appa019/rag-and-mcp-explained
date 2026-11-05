@@ -21,53 +21,36 @@ export const ProgressRail = ({ basePath, steps, title }: Props) => {
 
   return (
     <nav aria-label="Seções do módulo" className="w-full">
-      {title ? (
-        <p className="mb-6 font-mono text-[11px] uppercase tracking-[0.18em] text-ink-muted">
-          {title}
-        </p>
-      ) : null}
+      {title ? <p className="mb-4 font-semibold text-ink">{title}</p> : null}
       <ol className="flex flex-col">
-        {steps.map((step, index) => {
+        {steps.map((step) => {
           const href = step.slug === "" ? normalizedBase : `${normalizedBase}/${step.slug}`;
           const isActive =
             pathname === href ||
             (step.slug !== "" && pathname?.startsWith(`${href}/`));
-          const number = String(index + 1).padStart(2, "0");
 
           return (
-            <li key={step.slug} className="relative">
+            <li key={step.slug}>
               <Link
                 href={href}
-                className={`group grid grid-cols-[auto_1fr] gap-4 py-3.5 transition-opacity ${
-                  isActive ? "opacity-100" : "opacity-60 hover:opacity-100"
-                }`}
+                className="group flex flex-col py-2.5"
                 aria-current={isActive ? "page" : undefined}
               >
                 <span
-                  className={`font-mono text-[11px] leading-snug tracking-wide ${
-                    isActive ? "text-highlight" : "text-ink-muted"
+                  className={`text-[17px] leading-tight transition-colors ${
+                    isActive
+                      ? "font-semibold text-accent"
+                      : "text-ink group-hover:text-accent"
                   }`}
                 >
-                  {number}
+                  {step.label}
                 </span>
-                <span className="flex flex-col">
-                  <span
-                    className={`font-serif text-[17px] leading-tight ${
-                      isActive ? "text-ink" : "text-ink"
-                    }`}
-                  >
-                    {step.label}
+                {step.hint ? (
+                  <span className="mt-1 text-sm leading-snug text-ink-muted">
+                    {step.hint}
                   </span>
-                  {step.hint ? (
-                    <span className="mt-0.5 text-[12.5px] leading-snug text-ink-muted">
-                      {step.hint}
-                    </span>
-                  ) : null}
-                </span>
+                ) : null}
               </Link>
-              {index < steps.length - 1 ? (
-                <span className="absolute bottom-0 left-0 right-0 h-px bg-rule" />
-              ) : null}
             </li>
           );
         })}

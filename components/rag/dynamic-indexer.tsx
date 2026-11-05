@@ -50,7 +50,7 @@ const pick = <T,>(arr: readonly T[]): T => {
 
 const kindMeta: Record<EventKind, { icon: typeof Plus; label: string; color: string }> = {
   add: { icon: Plus, label: "Adicionado", color: "var(--color-success)" },
-  update: { icon: RefreshCw, label: "Reindexado", color: "var(--color-accent)" },
+  update: { icon: RefreshCw, label: "Reindexado", color: "var(--color-viz-1)" },
   remove: { icon: Minus, label: "Expirou", color: "var(--color-highlight)" },
 };
 
@@ -97,13 +97,13 @@ export const DynamicIndexer = () => {
 
   return (
     <div className="grid grid-cols-1 gap-6 md:grid-cols-5">
-      <section className="md:col-span-2 border border-rule bg-surface">
+      <section className="md:col-span-2 bg-surface">
         <header className="flex items-center justify-between border-b border-rule px-5 py-3">
-          <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-muted">
+          <span className="text-sm text-ink-muted">
             Estado do índice
           </span>
-          <span className="font-mono text-[11px] text-ink">
-            {total.toString().padStart(3, "0")} chunks
+          <span className="text-sm tabular-nums text-ink">
+            {total} chunks
           </span>
         </header>
         <ul className="divide-y divide-rule">
@@ -119,8 +119,8 @@ export const DynamicIndexer = () => {
                   />
                   <span className="text-[13px] text-ink">{c.label}</span>
                 </span>
-                <span className="font-mono text-[11px] tabular-nums text-ink">
-                  {n.toString().padStart(2, "0")}
+                <span className="text-sm tabular-nums text-ink">
+                  {n}
                 </span>
                 <span className="col-span-2 h-[2px] bg-rule">
                   <motion.span
@@ -138,7 +138,7 @@ export const DynamicIndexer = () => {
           <button
             type="button"
             onClick={() => setPaused((p) => !p)}
-            className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-ink-muted hover:text-ink"
+            className="inline-flex items-center gap-2 text-sm text-ink-muted hover:text-ink"
             aria-pressed={paused}
           >
             {paused ? (
@@ -149,19 +149,19 @@ export const DynamicIndexer = () => {
             {paused ? "Retomar" : "Pausar"}
           </button>
           {prefersReduced ? (
-            <span className="font-mono text-[10.5px] uppercase tracking-[0.18em] text-warn">
+            <span className="text-sm text-warn">
               Animação reduzida
             </span>
           ) : null}
         </footer>
       </section>
 
-      <section className="md:col-span-3 border border-rule bg-surface">
+      <section className="md:col-span-3 bg-surface">
         <header className="flex items-center justify-between border-b border-rule px-5 py-3">
-          <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-muted">
+          <span className="text-sm text-ink-muted">
             Eventos recentes
           </span>
-          <span className="font-mono text-[11px] text-ink-muted">
+          <span className="text-sm text-ink-muted">
             {events.length} / 12
           </span>
         </header>
@@ -170,7 +170,7 @@ export const DynamicIndexer = () => {
             {events.length === 0 ? (
               <motion.li
                 key="empty"
-                className="px-5 py-8 text-center font-serif text-[15px] italic text-ink-muted"
+                className="px-5 py-8 text-center text-[15px] text-ink-muted"
               >
                 Aguardando primeiro evento…
               </motion.li>
@@ -195,7 +195,7 @@ export const DynamicIndexer = () => {
                       <Icon aria-hidden className="size-3.5" />
                     </span>
                     <span
-                      className="font-mono text-[10.5px] uppercase tracking-[0.18em]"
+                      className="text-sm"
                       style={{ color: getCategoryColor(e.category) }}
                     >
                       {getCategoryLabel(e.category)}

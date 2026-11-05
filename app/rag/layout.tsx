@@ -5,7 +5,7 @@ import { ragSections } from "@/lib/module-sections";
 
 export default function RagLayout({ children }: { children: ReactNode }) {
   return (
-    <ModuleShell basePath="/rag" railTitle="Módulo 01 · RAG" steps={ragSections}>
+    <ModuleShell basePath="/rag" railTitle="Módulo RAG" steps={ragSections}>
       {children}
       <PageNavAuto basePath="/rag" steps={ragSections} />
     </ModuleShell>

@@ -28,7 +28,7 @@ const Scene = dynamic(
     ssr: false,
     loading: () => (
       <div className="flex h-full w-full items-center justify-center bg-surface">
-        <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-muted">
+        <span className="text-sm text-ink-muted">
           carregando cena 3D…
         </span>
       </div>
@@ -43,6 +43,7 @@ type Props = {
   topKLines?: readonly { from: Vec3; to: Vec3; rank: number }[];
   height?: string;
   caption?: string;
+  zoom?: boolean;
 };
 
 export const VectorSpaceCanvas = ({
@@ -52,6 +53,7 @@ export const VectorSpaceCanvas = ({
   topKLines,
   height = "520px",
   caption,
+  zoom,
 }: Props) => {
   const reducedMotion = useSyncExternalStore(
     subscribeReducedMotion,
@@ -72,7 +74,7 @@ export const VectorSpaceCanvas = ({
   return (
     <figure className="flex flex-col gap-3">
       <div
-        className="w-full border border-rule bg-surface"
+        className="w-full bg-surface"
         style={{ height }}
         role="img"
         aria-label="Visualização 3D interativa do espaço de embeddings simulado"
@@ -82,10 +84,11 @@ export const VectorSpaceCanvas = ({
           highlightIds={highlightIds}
           query={query}
           topKLines={topKLines}
+          zoom={zoom}
         />
       </div>
       {caption ? (
-        <figcaption className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-muted">
+        <figcaption className="text-sm text-ink-muted">
           {caption}
         </figcaption>
       ) : null}

@@ -10,12 +10,12 @@ export const TraditionalApiDiagram = () => {
   const duration = prefersReduced ? 0 : 2.6;
 
   return (
-    <figure className="border border-rule bg-surface p-6 md:p-10">
+    <figure className="bg-surface p-6 md:p-10">
       <figcaption className="mb-6 flex items-baseline justify-between">
-        <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-muted">
+        <span className="text-sm text-ink-muted">
           API REST · fluxo de requisição
         </span>
-        <span className="font-mono text-[10.5px] text-ink-muted">
+        <span className="text-sm text-ink-muted">
           Contrato pré-conhecido
         </span>
       </figcaption>
@@ -35,7 +35,7 @@ export const TraditionalApiDiagram = () => {
           y1={118}
           x2={290}
           y2={118}
-          stroke="var(--color-accent)"
+          stroke="var(--color-viz-1)"
           strokeWidth="1.5"
           initial={{ pathLength: 0, opacity: 0.2 }}
           animate={{ pathLength: 1, opacity: 1 }}
@@ -80,7 +80,7 @@ export const TraditionalApiDiagram = () => {
             y={73}
             width={120}
             height={22}
-            fill="var(--color-accent)"
+            fill="var(--color-viz-1)"
             rx="0"
           />
           <text
@@ -91,7 +91,6 @@ export const TraditionalApiDiagram = () => {
             fontSize="10"
             fontWeight="500"
             textAnchor="middle"
-            letterSpacing="0.05em"
           >
             POST /orders
           </text>
@@ -124,7 +123,6 @@ export const TraditionalApiDiagram = () => {
             fontSize="10"
             fontWeight="500"
             textAnchor="middle"
-            letterSpacing="0.05em"
           >
             200 OK · { "{…}" }
           </text>
@@ -133,11 +131,10 @@ export const TraditionalApiDiagram = () => {
         <text
           x={360}
           y={225}
-          fontFamily="var(--font-mono)"
+          fontFamily="var(--font-sans)"
           fontSize="11"
           fill="var(--color-ink-muted)"
           textAnchor="middle"
-          letterSpacing="0.04em"
         >
           cliente conhece endpoint e schema antes do build
         </text>
@@ -163,7 +160,7 @@ const Node = ({ x, y, label, sub }: NodeProps) => {
       <text
         x={x + NODE_WIDTH / 2}
         y={y + 25}
-        fontFamily="var(--font-serif)"
+        fontFamily="var(--font-semibold)"
         fontSize="17"
         fill="var(--color-ink)"
         textAnchor="middle"
@@ -173,11 +170,10 @@ const Node = ({ x, y, label, sub }: NodeProps) => {
       <text
         x={x + NODE_WIDTH / 2}
         y={y + 45}
-        fontFamily="var(--font-mono)"
+        fontFamily="var(--font-sans)"
         fontSize="10"
         fill="var(--color-ink-muted)"
         textAnchor="middle"
-        letterSpacing="0.08em"
       >
         {sub}
       </text>

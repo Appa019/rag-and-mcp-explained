@@ -120,7 +120,7 @@ const steps: Step[] = [
 
 const actorMeta: Record<Actor, { icon: typeof User; label: string; color: string }> = {
   user: { icon: User, label: "Usuário", color: "var(--color-ink)" },
-  client: { icon: Cpu, label: "Cliente MCP (LLM)", color: "var(--color-accent)" },
+  client: { icon: Cpu, label: "Cliente MCP (LLM)", color: "var(--color-viz-1)" },
   server: { icon: Server, label: "Servidor MCP", color: "var(--color-success)" },
 };
 
@@ -154,7 +154,7 @@ export const ToolCallingFlow = () => {
             >
               <Icon aria-hidden className="size-3.5" />
             </span>
-            <div className="border border-rule bg-surface">
+            <div className="bg-surface">
               <button
                 type="button"
                 onClick={() => toggle(i)}
@@ -163,17 +163,14 @@ export const ToolCallingFlow = () => {
               >
                 <span className="flex flex-col gap-1">
                   <span className="flex items-center gap-3">
-                    <span className="font-mono text-[10.5px] uppercase tracking-[0.18em] text-ink-subtle">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
                     <span
-                      className="font-mono text-[10.5px] uppercase tracking-[0.18em]"
+                      className="text-sm"
                       style={{ color: meta.color }}
                     >
                       {meta.label}
                     </span>
                   </span>
-                  <span className="font-serif text-xl leading-tight text-ink">
+                  <span className="font-semibold text-xl leading-tight text-ink">
                     {step.title}
                   </span>
                   <span className="text-[14.5px] leading-snug text-ink-muted">
@@ -202,7 +199,7 @@ export const ToolCallingFlow = () => {
                         {step.detail}
                       </p>
                       {step.payload ? (
-                        <pre className="overflow-x-auto border-l-2 border-rule bg-bg px-4 py-3 font-mono text-[12.5px] leading-relaxed text-ink">
+                        <pre className="overflow-x-auto bg-bg px-4 py-3 font-mono text-[12.5px] leading-relaxed text-ink">
                           <code>{step.payload}</code>
                         </pre>
                       ) : null}

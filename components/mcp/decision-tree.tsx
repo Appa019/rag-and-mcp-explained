@@ -36,7 +36,7 @@ const tree: Node = {
       headline: "Adotar MCP diretamente",
       body:
         "Descoberta em runtime e adição compatível de ferramentas são os recursos centrais do MCP. Quando o catálogo evolui com frequência, o cliente pode acompanhar essas mudanças sem redeploy, o que não é possível em uma API REST sem reescrita do cliente.",
-      accent: "var(--color-accent)",
+      accent: "var(--color-viz-1)",
     },
     no: {
       kind: "node",
@@ -56,7 +56,7 @@ const tree: Node = {
         headline: "Começar diretamente por MCP",
         body:
           "Sem legado REST e com cliente agentivo, o custo de manter apenas MCP é menor. Se mais tarde for necessário expor as mesmas funções para clientes humanos ou scripts determinísticos, uma camada REST pode ser adicionada sobre a mesma lógica de negócio.",
-        accent: "var(--color-accent)",
+        accent: "var(--color-viz-1)",
       },
     },
   },
@@ -108,9 +108,9 @@ export const DecisionTree = () => {
   const step = history.length + 1;
 
   return (
-    <div className="border border-rule bg-surface">
+    <div className="bg-surface">
       <header className="flex items-center justify-between border-b border-rule px-5 py-3">
-        <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-muted">
+        <span className="text-sm text-ink-muted">
           Árvore de decisão · passo {step}
         </span>
         <div className="flex items-center gap-4">
@@ -118,7 +118,7 @@ export const DecisionTree = () => {
             type="button"
             onClick={back}
             disabled={history.length === 0}
-            className="inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-ink-muted hover:text-ink disabled:opacity-40 disabled:hover:text-ink-muted"
+            className="inline-flex items-center gap-1.5 text-sm text-ink-muted hover:text-ink disabled:text-rule-strong disabled:hover:text-rule-strong"
           >
             <ArrowLeft aria-hidden className="size-3" />
             Voltar
@@ -127,7 +127,7 @@ export const DecisionTree = () => {
             type="button"
             onClick={reset}
             disabled={history.length === 0}
-            className="inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-ink-muted hover:text-ink disabled:opacity-40 disabled:hover:text-ink-muted"
+            className="inline-flex items-center gap-1.5 text-sm text-ink-muted hover:text-ink disabled:text-rule-strong disabled:hover:text-rule-strong"
           >
             <RefreshCw aria-hidden className="size-3" />
             Recomeçar
@@ -145,21 +145,21 @@ export const DecisionTree = () => {
             transition={{ duration: 0.22 }}
             className="flex flex-col gap-6 px-6 py-8 md:px-10"
           >
-            <p className="max-w-2xl font-serif text-2xl leading-tight text-ink md:text-3xl">
+            <p className="max-w-2xl font-semibold text-2xl leading-tight text-ink md:text-3xl">
               {current.question}
             </p>
             <div className="flex flex-wrap gap-3">
               <button
                 type="button"
                 onClick={() => answer("yes")}
-                className="border border-ink bg-ink px-4 py-2 text-[13px] text-surface transition-opacity hover:opacity-85"
+                className="min-h-11 border border-ink bg-ink px-5 py-2 text-[15px] font-medium text-bg transition-colors hover:border-accent hover:bg-accent"
               >
                 {current.yesLabel ?? "Sim"}
               </button>
               <button
                 type="button"
                 onClick={() => answer("no")}
-                className="border border-ink bg-surface px-4 py-2 text-[13px] text-ink transition-colors hover:bg-bg"
+                className="min-h-11 border border-ink bg-bg px-5 py-2 text-[15px] font-medium text-ink transition-colors hover:border-accent hover:text-accent"
               >
                 {current.noLabel ?? "Não"}
               </button>
@@ -176,12 +176,12 @@ export const DecisionTree = () => {
             style={{ borderColor: current.accent }}
           >
             <span
-              className="font-mono text-[11px] uppercase tracking-[0.18em]"
+              className="text-sm"
               style={{ color: current.accent }}
             >
               Recomendação
             </span>
-            <p className="font-serif text-3xl leading-tight text-ink md:text-4xl">
+            <p className="font-semibold text-3xl leading-tight text-ink md:text-4xl">
               {current.headline}
             </p>
             <p className="max-w-2xl text-[16px] leading-relaxed text-ink-muted">
@@ -193,7 +193,7 @@ export const DecisionTree = () => {
 
       {history.length > 0 ? (
         <footer className="border-t border-rule px-5 py-3">
-          <ol className="flex flex-wrap items-center gap-3 font-mono text-[11px] uppercase tracking-[0.14em] text-ink-muted">
+          <ol className="flex flex-wrap items-center gap-3 text-sm text-ink-muted">
             {history.map((h, i) => (
               <li key={i} className="flex items-center gap-2">
                 <span>

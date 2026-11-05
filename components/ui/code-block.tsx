@@ -8,19 +8,11 @@ type Props = {
 
 export const CodeBlock = ({ language, children, caption }: Props) => {
   return (
-    <figure className="my-8 overflow-hidden border border-rule bg-surface">
+    <figure className="my-8 overflow-hidden bg-surface">
       {(language || caption) && (
-        <figcaption className="flex items-center justify-between border-b border-rule px-4 py-2.5">
-          {language ? (
-            <span className="font-mono text-[10.5px] uppercase tracking-[0.2em] text-ink-muted">
-              {language}
-            </span>
-          ) : (
-            <span />
-          )}
-          {caption ? (
-            <span className="text-[12px] text-ink-muted">{caption}</span>
-          ) : null}
+        <figcaption className="flex items-center justify-between gap-4 px-4 pt-3 text-sm text-ink-muted">
+          <span>{language ?? ""}</span>
+          {caption ? <span>{caption}</span> : null}
         </figcaption>
       )}
       <pre className="overflow-x-auto px-4 py-4 font-mono text-[13px] leading-relaxed text-ink">

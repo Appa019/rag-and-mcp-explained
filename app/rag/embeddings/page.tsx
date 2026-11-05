@@ -17,7 +17,6 @@ export default function Page() {
   return (
     <article>
       <SectionHeader
-        eyebrow="02 · Embeddings"
         title="Embeddings"
         dek="Um embedding é um vetor de números que representa um pedaço de texto. A proximidade entre dois embeddings indica similaridade semântica entre os textos originais."
       />
@@ -116,13 +115,13 @@ export default function Page() {
                 style={{ borderColor: getCategoryHex(c.key) }}
               >
                 <span
-                  className="font-mono text-[10.5px] uppercase tracking-[0.18em]"
+                  className="text-sm"
                   style={{ color: getCategoryHex(c.key) }}
                 >
                   {c.label}
                 </span>
-                <span className="font-serif text-2xl text-ink">{n}</span>
-                <span className="font-mono text-[11px] text-ink-muted">
+                <span className="font-semibold text-2xl text-ink">{n}</span>
+                <span className="text-sm text-ink-muted">
                   chunks
                 </span>
               </div>
@@ -151,19 +150,16 @@ export default function Page() {
             intensidade daquela dimensão no chunk.
           </p>
           <ul className="mt-4 grid grid-cols-1 gap-x-8 gap-y-3 md:grid-cols-2">
-            {dimensions.map((d, i) => (
+            {dimensions.map((d) => (
               <li
                 key={d.key}
-                className="flex items-baseline gap-3 border-t border-rule pt-3"
+                className="flex items-baseline gap-3 pt-3"
               >
-                <span className="font-mono text-[11px] text-ink-subtle">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
                 <span>
-                  <span className="font-serif text-[17px] text-ink">
+                  <span className="font-semibold text-[17px] text-ink">
                     {d.label}
                   </span>
-                  <span className="mt-0.5 block text-[13.5px] leading-snug text-ink-muted">
+                  <span className="mt-0.5 block text-sm leading-snug text-ink-muted">
                     {d.description}
                   </span>
                 </span>

@@ -5,7 +5,7 @@ import { mcpSections } from "@/lib/module-sections";
 
 export default function McpLayout({ children }: { children: ReactNode }) {
   return (
-    <ModuleShell basePath="/mcp" railTitle="Módulo 02 · MCP" steps={mcpSections}>
+    <ModuleShell basePath="/mcp" railTitle="Módulo MCP" steps={mcpSections}>
       {children}
       <PageNavAuto basePath="/mcp" steps={mcpSections} />
     </ModuleShell>

@@ -1,22 +1,14 @@
 import type { ReactNode } from "react";
 
 type Props = {
-  eyebrow?: string;
   title: ReactNode;
   dek?: ReactNode;
-  align?: "left" | "center";
 };
 
-export const SectionHeader = ({ eyebrow, title, dek, align = "left" }: Props) => {
-  const alignClass = align === "center" ? "text-center items-center" : "text-left items-start";
+export const SectionHeader = ({ title, dek }: Props) => {
   return (
-    <header className={`flex flex-col gap-5 ${alignClass}`}>
-      {eyebrow ? (
-        <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-muted">
-          {eyebrow}
-        </span>
-      ) : null}
-      <h1 className="font-serif text-[clamp(2.25rem,5vw,4.25rem)] leading-[1.05] tracking-tight text-ink">
+    <header className="flex flex-col items-start gap-6">
+      <h1 className="type-display text-[clamp(2rem,8vw,3.5rem)] text-ink">
         {title}
       </h1>
       {dek ? (

@@ -15,7 +15,6 @@ export default function Page() {
   return (
     <article>
       <SectionHeader
-        eyebrow="01 · Chunking"
         title="Chunking"
         dek="Antes de gerar embeddings, o texto precisa ser dividido em pedaços menores. O tamanho desses pedaços e a sobreposição entre eles determinam a qualidade da recuperação."
       />

@@ -15,7 +15,6 @@ export default function Page() {
   return (
     <article>
       <SectionHeader
-        eyebrow="05 · Playground"
         title="Playground de consulta"
         dek="Cada consulta do playground tem um vetor curado nas mesmas oito dimensões dos chunks. Ao selecionar uma pergunta, o sistema calcula a similaridade cosseno da consulta contra os 24 chunks e mostra os três mais próximos."
       />

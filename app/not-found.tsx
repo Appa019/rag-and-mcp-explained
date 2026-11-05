@@ -7,34 +7,22 @@ export const metadata: Metadata = {
 
 export default function NotFound() {
   return (
-    <div className="mx-auto flex max-w-3xl flex-col items-start gap-8 px-6 py-24 md:px-10 md:py-40">
-      <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-ink-muted">
-        Erro 404
-      </span>
-      <h1 className="font-serif text-[clamp(2.5rem,7vw,5.5rem)] leading-[1.02] tracking-tight text-ink">
-        Página não encontrada.
+    <div className="mx-auto flex max-w-6xl flex-col items-start gap-8 px-6 py-24 md:px-10 md:py-40">
+      <h1 className="type-display text-[clamp(2.5rem,7vw,5.5rem)] text-ink">
+        Página não encontrada
       </h1>
       <p className="max-w-lg text-lg leading-relaxed text-ink-muted">
-        O endereço não corresponde a nenhuma das seções publicadas. Volte
-        para o início ou escolha um dos módulos abaixo.
+        Erro 404: o endereço não corresponde a nenhuma das seções publicadas.
+        Volte para o início ou escolha um dos módulos.
       </p>
-      <div className="flex flex-wrap gap-3 pt-4">
-        <Link
-          href="/"
-          className="border border-ink bg-ink px-5 py-2.5 text-sm text-surface transition-opacity hover:opacity-85"
-        >
-          Início
+      <div className="flex flex-wrap items-center gap-6 pt-2">
+        <Link href="/" className="button">
+          Voltar ao início
         </Link>
-        <Link
-          href="/rag"
-          className="border border-ink px-5 py-2.5 text-sm text-ink transition-colors hover:bg-ink hover:text-surface"
-        >
+        <Link href="/rag" className="link">
           Módulo RAG
         </Link>
-        <Link
-          href="/mcp"
-          className="border border-ink px-5 py-2.5 text-sm text-ink transition-colors hover:bg-ink hover:text-surface"
-        >
+        <Link href="/mcp" className="link">
           Módulo MCP
         </Link>
       </div>

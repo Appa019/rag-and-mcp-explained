@@ -43,7 +43,7 @@ export const QueryPanel = () => {
   return (
     <div className="flex flex-col gap-10">
       <div className="flex flex-col gap-4">
-        <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-muted">
+        <p className="text-sm text-ink-muted">
           Escolha uma pergunta
         </p>
         <ul className="flex flex-wrap gap-2">
@@ -57,7 +57,7 @@ export const QueryPanel = () => {
                   aria-pressed={isActive}
                   className={`border px-3 py-2 text-left text-[14px] transition-colors ${
                     isActive
-                      ? "border-ink bg-ink text-surface"
+                      ? "border-ink bg-ink text-bg"
                       : "border-rule bg-surface text-ink hover:border-ink"
                   }`}
                 >
@@ -83,12 +83,12 @@ export const QueryPanel = () => {
       />
 
       <div className="grid grid-cols-1 gap-8 md:grid-cols-5">
-        <section className="md:col-span-3 border border-rule bg-surface">
+        <section className="md:col-span-3 bg-surface">
           <header className="flex items-center justify-between border-b border-rule px-5 py-3">
-            <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-muted">
+            <span className="text-sm text-ink-muted">
               Top-3 recuperado
             </span>
-            <span className="font-mono text-[11px] text-ink-muted">
+            <span className="text-sm text-ink-muted">
               similaridade cosseno
             </span>
           </header>
@@ -108,13 +108,13 @@ export const QueryPanel = () => {
                     className="grid grid-cols-[auto_1fr_auto] items-start gap-4 px-5 py-4"
                   >
                     <span
-                      className="font-serif text-3xl leading-none"
+                      className="font-semibold text-3xl leading-none"
                       style={{ color: getCategoryHex(chunk.category) }}
                     >
                       {r.rank}
                     </span>
                     <span className="flex flex-col gap-1 min-w-0">
-                      <span className="flex items-center gap-2 font-mono text-[10.5px] uppercase tracking-[0.18em]">
+                      <span className="flex items-center gap-2 text-sm">
                         <span style={{ color: getCategoryHex(chunk.category) }}>
                           {getCategoryLabel(chunk.category)}
                         </span>
@@ -125,7 +125,7 @@ export const QueryPanel = () => {
                         {chunk.text.length > 170 ? "…" : ""}
                       </span>
                     </span>
-                    <span className="font-mono text-[13px] tabular-nums text-ink">
+                    <span className="text-[15px] font-medium tabular-nums text-ink">
                       {r.similarity.toFixed(3)}
                     </span>
                   </motion.li>
@@ -135,9 +135,9 @@ export const QueryPanel = () => {
           </ol>
         </section>
 
-        <section className="md:col-span-2 flex flex-col gap-4 border border-rule bg-surface p-5">
+        <section className="md:col-span-2 flex flex-col gap-4 bg-surface p-5">
           <header>
-            <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-muted">
+            <span className="text-sm text-ink-muted">
               Dimensões que acendem
             </span>
           </header>
@@ -148,7 +148,7 @@ export const QueryPanel = () => {
               return (
                 <li key={d.key} className="grid grid-cols-[auto_1fr_auto] items-center gap-3">
                   <span
-                    className={`font-mono text-[11px] uppercase tracking-wider ${
+                    className={`text-sm ${
                       on ? "text-ink" : "text-ink-subtle"
                     }`}
                   >
@@ -166,7 +166,7 @@ export const QueryPanel = () => {
                       transition={{ duration: 0.4 }}
                     />
                   </span>
-                  <span className="font-mono text-[11px] tabular-nums text-ink-muted">
+                  <span className="text-sm tabular-nums text-ink-muted">
                     {value.toFixed(2)}
                   </span>
                 </li>
@@ -174,7 +174,7 @@ export const QueryPanel = () => {
             })}
           </ul>
           {selected ? (
-            <p className="mt-2 border-t border-rule pt-4 font-serif text-[15px] italic leading-relaxed text-ink-muted">
+            <p className="mt-2 pt-2 text-[15px] leading-relaxed text-ink-muted">
               {selected.explanation}
             </p>
           ) : null}

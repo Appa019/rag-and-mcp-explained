@@ -11,7 +11,7 @@ type Props = {
 export const ModuleShell = ({ basePath, railTitle, steps, children }: Props) => {
   return (
     <div className="mx-auto max-w-6xl px-6 py-16 md:px-10 md:py-20">
-      <div className="grid grid-cols-12 gap-x-8 md:gap-x-12">
+      <div className="grid grid-cols-12 gap-x-8 gap-y-14 md:gap-x-12">
         <aside className="col-span-12 md:col-span-3 md:sticky md:top-10 md:self-start">
           <ProgressRail basePath={basePath} steps={steps} title={railTitle} />
         </aside>

@@ -14,8 +14,7 @@ export default function Page() {
   return (
     <div className="mx-auto max-w-3xl px-6 py-20 md:px-10 md:py-28">
       <SectionHeader
-        eyebrow="Sobre"
-        title="O que o site faz e como os dados foram construídos"
+        title="Método e limites"
         dek="Nota sobre método, honestidade pedagógica e limites do modelo simulado."
       />
       <div className="mt-12">

@@ -15,7 +15,6 @@ export default function Page() {
   return (
     <article>
       <SectionHeader
-        eyebrow="02 · Anatomia do MCP"
         title="Anatomia do MCP"
         dek="Um servidor MCP expõe três tipos de capacidade que podem ser consultadas em tempo de execução: tools (ações), resources (leituras) e prompts (templates). O cliente descobre o catálogo por uma chamada de listagem."
       />

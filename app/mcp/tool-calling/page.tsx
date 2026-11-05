@@ -14,7 +14,6 @@ export default function Page() {
   return (
     <article>
       <SectionHeader
-        eyebrow="04 · Tool calling"
         title="Fluxo de tool calling"
         dek="A sequência abaixo mostra, passo a passo, o que acontece entre o usuário, o cliente MCP (uma LLM) e o servidor MCP durante uma invocação de ferramenta. Clique em cada passo para ver o payload JSON-RPC."
       />

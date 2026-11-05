@@ -8,35 +8,19 @@ type Props = {
   children: ReactNode;
 };
 
-const styles: Record<Variant, { border: string; label: string; color: string }> = {
-  note: {
-    border: "border-accent",
-    label: "Nota",
-    color: "text-accent",
-  },
-  warn: {
-    border: "border-warn",
-    label: "Atenção",
-    color: "text-warn",
-  },
-  aside: {
-    border: "border-rule-strong",
-    label: "À parte",
-    color: "text-ink-muted",
-  },
+const labels: Record<Variant, string> = {
+  note: "Nota",
+  warn: "Atenção",
+  aside: "À parte",
 };
 
 export const Callout = ({ variant = "note", title, children }: Props) => {
-  const style = styles[variant];
   return (
-    <aside
-      role="note"
-      className={`border-l-2 ${style.border} bg-surface px-6 py-5 my-8`}
-    >
-      <p className={`font-mono text-[11px] uppercase tracking-[0.18em] ${style.color}`}>
-        {title ?? style.label}
+    <aside role="note" className="my-10 bg-surface px-6 py-6 md:px-8">
+      <p className={`font-semibold ${variant === "warn" ? "text-warn" : "text-ink"}`}>
+        {title ?? labels[variant]}
       </p>
-      <div className="mt-2 text-[15.5px] leading-relaxed text-ink">{children}</div>
+      <div className="mt-2 text-base leading-relaxed text-ink">{children}</div>
     </aside>
   );
 };
